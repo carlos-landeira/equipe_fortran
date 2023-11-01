@@ -1,6 +1,7 @@
 using Trabalho1.Models;
+using Trabalho1.Services;
 
-namespace Trabalho1.View;
+namespace Trabalho1.Views;
 
 public class View
 {

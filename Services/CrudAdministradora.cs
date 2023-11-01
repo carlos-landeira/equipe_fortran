@@ -1,6 +1,6 @@
 using Trabalho1.Models;
 
-namespace Trabalho1;
+namespace Trabalho1.Services;
 
 public class CrudAdministradora: ICrud<Administradora>
 {

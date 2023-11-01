@@ -1,4 +1,4 @@
-namespace Trabalho1;
+namespace Trabalho1.Services;
 
 public interface ICrud<T>
 {
