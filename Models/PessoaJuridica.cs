@@ -6,7 +6,7 @@ public class PessoaJuridica: BaseModel
     
     public string Documento { get; set; }
 
-    public override string ToString()
+    public string ToString()
     {
         return base.ToString() + $";{Nome};{Documento}";
     }

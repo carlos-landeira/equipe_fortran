@@ -4,7 +4,7 @@ public class BaseModel
 {
     public int Id { get; set; }
 
-    public override string ToString()
+    public string ToString()
     {
         return $"{Id}";
     }

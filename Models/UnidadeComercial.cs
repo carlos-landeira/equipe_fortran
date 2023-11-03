@@ -6,6 +6,11 @@ public class UnidadeComercial: Unidade
 {
     private static int ProximoId;
 
+    public UnidadeComercial()
+    {
+        this.Id = ProximoId++;
+    }
+
     public static UnidadeComercial FindById(int id)
     {
         CrudUnidade<UnidadeComercial> crudUnidade = new CrudUnidade<UnidadeComercial>();

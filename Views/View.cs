@@ -124,8 +124,11 @@ public class View
                 Administradora administradora = new Administradora
                 {
                     Nome = RequisitarValor("Digite o nome da administradora:"),
-                    Documento = RequisitarValor("Digite o documento:"),
+                    Documento = RequisitarValor("Digite o documento:")
                 };
+
+                string[] idsCondominios = RequisitarValor("Digite o identificador dos condomínios separados por ',':").Split(',');
+                administradora.Condominios = Administradora.ObterCondominiosPorId(Array.ConvertAll(idsCondominios, int.Parse));
 
                 crud.Create(administradora);
                 break;
@@ -269,8 +272,7 @@ public class View
     private void ManipularCrudUnidade()
     {
         ExibirOpcoesCrud("unidades");
-        // instanciar crud aqui
-
+        
         switch (ObterEscolhaUsuario())
         {
             case ACAO_CRIAR:

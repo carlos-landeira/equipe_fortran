@@ -39,7 +39,16 @@ public class CrudBloco: ICrud<Bloco>
 
     public void Create(Bloco model)
     {
-        throw new NotImplementedException();
+        try
+        {
+            StreamWriter sw = new StreamWriter($"/home/carlos/Documents/Trabalho1/BancoDeDados/Bloco.txt", true);
+            sw.WriteLine(model.ToString());
+            sw.Close();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Exception: " + e.Message);
+        }
     }
 
     public void Update(Bloco model)
@@ -70,7 +79,7 @@ public class CrudBloco: ICrud<Bloco>
 
         foreach (var id in ids)
         {
-            // unidades.Add(UnidadeResidencial.FindById(int.Parse(id)));
+            unidades.Add(UnidadeResidencial.FindById(int.Parse(id)));
         }
 
         return unidades;

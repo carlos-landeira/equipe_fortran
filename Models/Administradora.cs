@@ -12,22 +12,29 @@ public class Administradora: PessoaJuridica
         this.Condominios = new List<Condominio>();
     }
 
-    public override string ToString()
+    public static List<Condominio> ObterCondominiosPorId(int[] ids)
     {
-        if (Condominios.Count != 0)
+        List<Condominio> condominios = new List<Condominio>();
+
+        foreach (var id in ids)
         {
-            string condominios = ";";
-
-            foreach (var condominio in Condominios)
-            {
-                condominios += $"{condominio.Nome}, ";
-            }
-
-            condominios.Substring(condominios.Length - 3);
-
-            return base.ToString() + condominios;
+            condominios.Add(Condominio.FindById(id));
         }
 
-        return base.ToString();
+        return condominios;
+    }
+
+    public string ToString()
+    {
+        string condominios = ";";
+
+        foreach (var condominio in Condominios)
+        { 
+            condominios += $"{condominio.Nome}, ";
+        }
+
+        condominios.Substring(condominios.Length - 3);
+
+        return base.ToString() + condominios;
     }
 }

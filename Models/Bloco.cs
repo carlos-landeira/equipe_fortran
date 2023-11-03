@@ -12,4 +12,22 @@ public class Bloco: BaseModel
     {
         this.Id = ProximoId++;
     }
+
+    public string ToString()
+    {
+        return base.ToString() +
+               $"{Nome};{StringIdsUnidade(UnidadesComerciais.Cast<Unidade>().ToList())};{StringIdsUnidade(UnidadeResidenciais.Cast<Unidade>().ToList())}";
+    }
+
+    private string StringIdsUnidade(List<Unidade> unidades)
+    {
+        string resultado = "";
+
+        foreach (var unidade in unidades)
+        {
+            resultado += $"{unidade.Id},";
+        }
+
+        return resultado;
+    }
 }

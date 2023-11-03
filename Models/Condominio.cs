@@ -11,7 +11,7 @@ public class Condominio: PessoaJuridica
         this.Id = ProximoId++;
     }
 
-    public Condominio FindById(int id)
+    public static Condominio FindById(int id)
     {
         CrudCondominio crudCondominio = new CrudCondominio();
         List<Condominio> condominios = crudCondominio.Read().ToList();
