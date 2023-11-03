@@ -1,14 +1,14 @@
+using Trabalho1.Services;
+
 namespace Trabalho1.Models;
 
 public class Unidade: BaseModel
 {
-    private string Nome { get; set; }
-    private Morador Morador { get; set; }
-    
-    private static int ProximoId;
+    public string Nome { get; set; }
+    public Morador Morador { get; set; }
 
-    public Unidade()
+    public string ToString()
     {
-        this.Id = ProximoId++;
+        return base.ToString() + $";{Nome};{Morador.Id}";
     }
 }

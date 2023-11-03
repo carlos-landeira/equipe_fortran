@@ -13,7 +13,7 @@ public class Administradora: PessoaJuridica
 
     public string ToString()
     {
-        string condominios = "";
+        string condominios = ";";
 
         foreach (var condominio in Condominios)
         {

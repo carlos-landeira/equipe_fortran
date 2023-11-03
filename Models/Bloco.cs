@@ -2,8 +2,9 @@ namespace Trabalho1.Models;
 
 public class Bloco: BaseModel
 {
-    private string Nome { get; set; }
-    private List<Unidade> Unidades { get; set; }
+    public string Nome { get; set; }
+    public List<UnidadeComercial> UnidadesComerciais { get; set; }
+    public List<UnidadeResidencial> UnidadeResidenciais { get; set; }
     
     private static int ProximoId;
 
