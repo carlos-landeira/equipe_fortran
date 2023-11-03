@@ -5,10 +5,42 @@ namespace Trabalho1.Views;
 
 public class View
 {
+    const string OPCOES_ADMINISTRADORA = "1";
+    const string OPCOES_CONDOMINIO = "2";
+    const string OPCOES_BLOCOS = "3";
+    const string OPCOES_UNIDADES = "4";
+    const string OPCOES_MORADORES = "5";
+
     public void Main()
     {
-        CrudAdministradora c = new CrudAdministradora();
-        c.Create(new Administradora());
+        Console.WriteLine(GerarMensagemBoasVindas());
+
+        do
+        {
+            ExibirOpcoesAcoes();
+
+            switch (ObterEscolhaUsuario())
+            {
+                case OPCOES_ADMINISTRADORA:
+                    ManipularCrudAdministradora();
+                    break;
+                case OPCOES_CONDOMINIO:
+                    ManipularCrudCondominio();
+                    break;
+                case OPCOES_BLOCOS:
+                    ManipularCrudBloco();
+                    break;
+                case OPCOES_UNIDADES:
+                    ManipularCrudUnidade();
+                    break;
+                case OPCOES_MORADORES:
+                    ManipularCrudMorador();
+                    break;
+                default:
+                    Console.WriteLine("Esta opção não existe.");
+                    break;
+            }
+        } while (Continuar());
     }
 
     private string GerarMensagemBoasVindas()
@@ -19,14 +51,72 @@ public class View
         if (dataAtual.Hour >= 6 && dataAtual.Hour <= 11)
         {
             saudacao = "Bom dia!";
-        } else if (dataAtual.Hour >= 12 && dataAtual.Hour <= 17)
+        }
+        else if (dataAtual.Hour >= 12 && dataAtual.Hour <= 17)
         {
             saudacao = "Boa tarde!";
-        } else
+        }
+        else
         {
             saudacao = "Boa noite!";
         }
 
         return saudacao + " São " + dataAtual.ToString("HH:mm");
     }
+
+    private bool Continuar()
+    {
+        Console.WriteLine($"Você deseja fazer uma nova operação? (s / n)");
+
+        return ObterEscolhaUsuario()?.ToUpper() == "S";
+    }
+
+    private string? ObterEscolhaUsuario()
+    {
+        return Console.ReadLine()?.Trim();
+    }
+
+    private string ObterResposta(string pergunta)
+    {
+        string? resposta;
+
+        do
+        {
+            Console.WriteLine(pergunta);
+            resposta = ObterEscolhaUsuario();
+        }
+        while (resposta == null);
+
+        return resposta;
+    }
+
+    private void ExibirOpcoesAcoes()
+    {
+        Console.WriteLine("Digite o que você deseja fazer:");
+        Console.WriteLine($"{OPCOES_ADMINISTRADORA} - Administradoras");
+        Console.WriteLine($"{OPCOES_CONDOMINIO} - Condominios");
+        Console.WriteLine($"{OPCOES_BLOCOS} - Blocos");
+        Console.WriteLine($"{OPCOES_UNIDADES} - Unidades");
+        Console.WriteLine($"{OPCOES_MORADORES} - Moradores");
+    }
+
+    private void ManipularCrudAdministradora()
+    {
+        ObterResposta("Digite algo para testar");
+
+        CrudAdministradora c = new CrudAdministradora();
+        c.Create(new Administradora());
+    }
+
+    private void ManipularCrudCondominio()
+    { }
+
+    private void ManipularCrudBloco()
+    { }
+
+    private void ManipularCrudUnidade()
+    { }
+
+    private void ManipularCrudMorador()
+    { }
 }
