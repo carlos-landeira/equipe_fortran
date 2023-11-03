@@ -66,6 +66,13 @@ public class CrudBloco: ICrud<Bloco>
     
     private List<UnidadeResidencial> ObterUnidadesResidenciais(string[] ids)
     {
-        
+        List<UnidadeResidencial> unidades = new List<UnidadeResidencial>();
+
+        foreach (var id in ids)
+        {
+            // unidades.Add(UnidadeResidencial.FindById(int.Parse(id)));
+        }
+
+        return unidades;
     }
 }

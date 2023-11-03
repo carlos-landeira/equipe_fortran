@@ -1,3 +1,5 @@
+using Trabalho1.Services;
+
 namespace Trabalho1.Models;
 
 public class Condominio: PessoaJuridica
@@ -7,5 +9,13 @@ public class Condominio: PessoaJuridica
     public Condominio()
     {
         this.Id = ProximoId++;
+    }
+
+    public Condominio FindById(int id)
+    {
+        CrudCondominio crudCondominio = new CrudCondominio();
+        List<Condominio> condominios = crudCondominio.Read().ToList();
+
+        return condominios.Find(x => x.Id == id) ?? new Condominio();
     }
 }
