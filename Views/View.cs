@@ -1,3 +1,4 @@
+using equipe_fortran.Views;
 using Trabalho1.Models;
 using Trabalho1.Services;
 
@@ -10,12 +11,12 @@ public class View
     const string OPCOES_BLOCOS = "3";
     const string OPCOES_UNIDADES = "4";
     const string OPCOES_MORADORES = "5";
-    const string ACAO_CRIAR = "1";
-    const string ACAO_VISUALIZAR = "2";
-    const string ACAO_EDITAR = "3";
-    const string ACAO_EXCLUIR = "4";
+    public const string ACAO_CRIAR = "1";
+    public const string ACAO_VISUALIZAR = "2";
+    public const string ACAO_EDITAR = "3";
+    public const string ACAO_EXCLUIR = "4";
 
-    public void Main()
+    public virtual void Main()
     {
         Console.WriteLine(GerarMensagemBoasVindas());
 
@@ -26,19 +27,24 @@ public class View
             switch (ObterEscolhaUsuario())
             {
                 case OPCOES_ADMINISTRADORA:
-                    ManipularCrudAdministradora();
+                    AdministradoraView administradoraView = new();
+                    administradoraView.Main();
                     break;
                 case OPCOES_CONDOMINIO:
-                    ManipularCrudCondominio();
+                    CondominioView condominioView = new();
+                    condominioView.Main();
                     break;
                 case OPCOES_BLOCOS:
-                    ManipularCrudBloco();
+                    BlocoView blocoView = new();
+                    blocoView.Main();
                     break;
                 case OPCOES_UNIDADES:
-                    ManipularCrudUnidade();
+                    UnidadeView unidadeView = new();
+                    unidadeView.Main();
                     break;
                 case OPCOES_MORADORES:
-                    ManipularCrudMorador();
+                    MoradorView moradorView = new();
+                    moradorView.Main();
                     break;
                 default:
                     Console.WriteLine("Esta opção não existe.");
@@ -47,7 +53,7 @@ public class View
         } while (Continuar());
     }
 
-    private string GerarMensagemBoasVindas()
+    public string GerarMensagemBoasVindas()
     {
         DateTime dataAtual = DateTime.Now;
         string saudacao;
@@ -68,19 +74,19 @@ public class View
         return saudacao + " São " + dataAtual.ToString("HH:mm");
     }
 
-    private bool Continuar()
+    public bool Continuar()
     {
         Console.WriteLine($"Você deseja fazer uma nova operação? (s / n)");
 
         return ObterEscolhaUsuario()?.ToUpper() == "S";
     }
 
-    private string? ObterEscolhaUsuario()
+    public string? ObterEscolhaUsuario()
     {
         return Console.ReadLine()?.Trim();
     }
 
-    private string RequisitarValor(string pergunta)
+    public string RequisitarValor(string pergunta)
     {
         string? resposta;
 
@@ -94,7 +100,7 @@ public class View
         return resposta;
     }
 
-    private void ExibirOpcoesAcoes()
+    public void ExibirOpcoesAcoes()
     {
         Console.WriteLine("Digite o que você deseja acessar:");
         Console.WriteLine($"{OPCOES_ADMINISTRADORA} - Administradoras");
@@ -104,303 +110,12 @@ public class View
         Console.WriteLine($"{OPCOES_MORADORES} - Moradores");
     }
 
-    private void ExibirOpcoesCrud(string objeto)
+    public void ExibirOpcoesCrud(string objeto)
     {
         Console.WriteLine($"Digite o que você deseja fazer com {objeto}:");
         Console.WriteLine($"{ACAO_CRIAR} - Criar");
         Console.WriteLine($"{ACAO_VISUALIZAR} - Visualizar");
         Console.WriteLine($"{ACAO_EDITAR} - Editar");
         Console.WriteLine($"{ACAO_EXCLUIR} - Excluir");
-    }
-
-    private void ManipularCrudAdministradora()
-    {
-        ExibirOpcoesCrud("administradoras");
-        CrudAdministradora crud = new CrudAdministradora();
-
-        switch (ObterEscolhaUsuario())
-        {
-            case ACAO_CRIAR:
-                Administradora administradora = new Administradora
-                {
-                    Nome = RequisitarValor("Digite o nome da administradora:"),
-                    Documento = RequisitarValor("Digite o documento:")
-                };
-
-                string[] idsCondominios = RequisitarValor("Digite o identificador dos condomínios separados por ',':").Split(',');
-                administradora.Condominios = Administradora.ObterCondominiosPorId(Array.ConvertAll(idsCondominios, int.Parse));
-
-                crud.Create(administradora);
-                break;
-            case ACAO_VISUALIZAR:
-                IEnumerable<Administradora> listaAdministradoras = crud.Read();
-
-                if (listaAdministradoras != null)
-                {
-                    Console.WriteLine("Não há nenhuma administradora cadastrada.");
-                }
-                else
-                {
-                    foreach (var adm in listaAdministradoras)
-                    {
-                        ExibirAdministradora(adm);
-                    }
-                }
-                break;
-            case ACAO_EDITAR:
-                Console.Write("Digite o ID da administradora que deseja atualizar: ");
-                int idAtualizacao = int.Parse(Console.ReadLine());
-
-                Administradora admAtualizacao = crud.Read().ToList().Find(a => a.Id == idAtualizacao);
-
-                crud.Update(admAtualizacao);
-                break;
-            case ACAO_EXCLUIR:
-                Console.Write("Digite o ID da administradora que deseja excluir: ");
-                int idExclusao = int.Parse(Console.ReadLine());
-
-                crud.Delete(idExclusao);
-                break;
-            default:
-                Console.WriteLine("Esta opção não existe.");
-                break;
-        }
-    }
-
-    private void ManipularCrudCondominio()
-    {
-        ExibirOpcoesCrud("condomínios");
-        //crud
-
-        switch (ObterEscolhaUsuario())
-        {
-            case ACAO_CRIAR:
-                Condominio condominio = new Condominio
-                {
-                    Nome = RequisitarValor("Digite o nome do condomínio:"),
-                    Documento = RequisitarValor("Digite o documento:")
-                };
-
-                //crud.Create(condominio);
-                break;
-            case ACAO_VISUALIZAR:
-                //IEnumerable<Condominio> listaCondominios = crud.Read();
-
-                // if (listaCondominios != null)
-                // {
-                //     Console.WriteLine("Não há nenhum condomínio cadastrado.");
-                // }
-                // else
-                // {
-                //     foreach (var cond in listaCondominios)
-                //     {
-                //         ExibirCondominio(cond);
-                //     }
-                // }
-                break;
-            case ACAO_EDITAR:
-                Console.Write("Digite o ID do condomínio que deseja atualizar:");
-                int idAtualizacao = int.Parse(Console.ReadLine());
-
-                // Condominio condAtualizacao = crud.Read().ToList().Find(a => a.Id == idAtualizacao);
-
-                // crud.Update(condAtualizacao);
-                break;
-            case ACAO_EXCLUIR:
-                Console.Write("Digite o ID do condomínio que deseja excluir:");
-                int idExclusao = int.Parse(Console.ReadLine());
-
-                // crud.Delete(idExclusao);
-                break;
-            default:
-                Console.WriteLine("Esta opção não existe.");
-                break;
-        }
-    }
-
-    private void ManipularCrudBloco()
-    {
-        ExibirOpcoesCrud("blocos");
-        // instanciar crud aqui
-
-        switch (ObterEscolhaUsuario())
-        {
-            case ACAO_CRIAR:
-                Bloco bloco = new Bloco
-                {
-                    //Nome = RequisitarValor("Digite o nome do bloco:")
-                };
-
-                //crud.Create(bloco);
-                break;
-            case ACAO_VISUALIZAR:
-                //IEnumerable<Bloco> listaBlocos = crud.Read();
-
-                // if (listaBlocos != null)
-                // {
-                //     Console.WriteLine("Não há nenhum bloco cadastrado.");
-                // }
-                // else
-                // {
-                //     foreach (var bl in listaBlocos)
-                //     {
-                //         ExibirBloco(bl);
-                //     }
-                // }
-                break;
-            case ACAO_EDITAR:
-                Console.Write("Digite o ID do bloco que deseja atualizar:");
-                int idAtualizacao = int.Parse(Console.ReadLine());
-
-                // Bloco blocoAtualizacao = crud.Read().ToList().Find(a => a.Id == idAtualizacao);
-
-                // crud.Update(blocoAtualizacao);
-                break;
-            case ACAO_EXCLUIR:
-                Console.Write("Digite o ID do bloco que deseja excluir:");
-                int idExclusao = int.Parse(Console.ReadLine());
-
-                // crud.Delete(idExclusao);
-                break;
-            default:
-                Console.WriteLine("Esta opção não existe.");
-                break;
-        }
-
-    }
-
-    private void ManipularCrudUnidade()
-    {
-        ExibirOpcoesCrud("unidades");
-        
-        switch (ObterEscolhaUsuario())
-        {
-            case ACAO_CRIAR:
-                Unidade unidade = new Unidade
-                {
-                    //Nome = RequisitarValor("Digite o nome da unidade:")
-                };
-
-                //crud.Create(unidade);
-                break;
-            case ACAO_VISUALIZAR:
-                //IEnumerable<Unidade> listaUnidades = crud.Read();
-
-                // if (listaUnidades != null)
-                // {
-                //     Console.WriteLine("Não há nenhuma unidade cadastrado.");
-                // }
-                // else
-                // {
-                //     foreach (var uni in listaUnidades)
-                //     {
-                //         ExibirUnidade(uni);
-                //     }
-                // }
-                break;
-            case ACAO_EDITAR:
-                Console.Write("Digite o ID da unidade que deseja atualizar:");
-                int idAtualizacao = int.Parse(Console.ReadLine());
-
-                // Unidade unidadeAtualizacao = crud.Read().ToList().Find(a => a.Id == idAtualizacao);
-
-                // crud.Update(unidadeAtualizacao);
-                break;
-            case ACAO_EXCLUIR:
-                Console.Write("Digite o ID da unidade que deseja excluir:");
-                int idExclusao = int.Parse(Console.ReadLine());
-
-                // crud.Delete(idExclusao);
-                break;
-            default:
-                Console.WriteLine("Esta opção não existe.");
-                break;
-        }
-    }
-
-    private void ManipularCrudMorador()
-    {
-        ExibirOpcoesCrud("moradores");
-        // instanciar crud aqui
-
-        switch (ObterEscolhaUsuario())
-        {
-            case ACAO_CRIAR:
-                Morador morador = new Morador
-                {
-                    //Nome = RequisitarValor("Digite o nome do morador:")
-                };
-
-                //crud.Create(morador);
-                break;
-            case ACAO_VISUALIZAR:
-                //IEnumerable<Morador> listaMoradores = crud.Read();
-
-                // if (listaMoradores != null)
-                // {
-                //     Console.WriteLine("Não há nenhum morador cadastrado.");
-                // }
-                // else
-                // {
-                //     foreach (var mor in listaMoradores)
-                //     {
-                //         ExibirMorador(mor);
-                //     }
-                // }
-                break;
-            case ACAO_EDITAR:
-                Console.Write("Digite o ID do morador que deseja atualizar:");
-                int idAtualizacao = int.Parse(Console.ReadLine());
-
-                // Morador moradorAtualizacao = crud.Read().ToList().Find(a => a.Id == idAtualizacao);
-
-                // crud.Update(moradorAtualizacao);
-                break;
-            case ACAO_EXCLUIR:
-                Console.Write("Digite o ID do morador que deseja excluir:");
-                int idExclusao = int.Parse(Console.ReadLine());
-
-                // crud.Delete(idExclusao);
-                break;
-            default:
-                Console.WriteLine("Esta opção não existe.");
-                break;
-        }
-    }
-
-    private void ExibirAdministradora(Administradora administradora)
-    {
-        Console.WriteLine($"Id: {administradora.Id}");
-        Console.WriteLine($"Nome: {administradora.Nome}");
-        Console.WriteLine($"Documento: {administradora.Documento}");
-        Console.WriteLine($"Condomínios: {administradora.Condominios}");
-    }
-
-    private void ExibirCondominio(Condominio condominio)
-    {
-        Console.WriteLine($"Id: {condominio.Id}");
-        Console.WriteLine($"Nome: {condominio.Nome}");
-        Console.WriteLine($"Documento: {condominio.Documento}");
-        //Console.WriteLine($"Unidades: {condominio.Blocos}");
-    }
-
-    private void ExibirBloco(Bloco bloco)
-    {
-        Console.WriteLine($"Id: {bloco.Id}");
-        Console.WriteLine($"Nome: {bloco.Nome}");
-        //Console.WriteLine($"Unidades: {bloco.Unidades}");
-    }
-
-    private void ExibirUnidade(Unidade unidade)
-    {
-        Console.WriteLine($"Id: {unidade.Id}");
-        Console.WriteLine($"Nome: {unidade.Nome}");
-        //Console.WriteLine($"Moradores: {unidades.Moradores}");
-    }
-
-    private void ExibirMorador(Morador morador)
-    {
-        Console.WriteLine($"Id: {morador.Id}");
-        //Console.WriteLine($"Nome: {morador.Nome}");
     }
 }
