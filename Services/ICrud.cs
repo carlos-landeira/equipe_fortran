@@ -1,6 +1,8 @@
+using Trabalho1.Models;
+
 namespace Trabalho1.Services;
 
-public interface ICrud<T>
+public interface ICrud<T> where T: BaseModel
 {
     public IEnumerable<T> Read();
 

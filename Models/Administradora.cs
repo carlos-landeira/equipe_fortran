@@ -10,4 +10,18 @@ public class Administradora: PessoaJuridica
     {
         this.Id = ProximoId++;
     }
+
+    public string ToString()
+    {
+        string condominios = "";
+
+        foreach (var condominio in Condominios)
+        {
+            condominios += $"{condominio.Nome}, ";
+        }
+
+        condominios.Substring(condominios.Length - 3);
+        
+        return base.ToString() + condominios;
+    }
 }
