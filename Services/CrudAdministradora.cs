@@ -16,9 +16,11 @@ public class CrudAdministradora: ICrud<Administradora>
         
         try
         {
-            StreamWriter sw = new StreamWriter("/~/Documents/curso_csharp/Modulo4/Trabalho1/BancoDeDados/Administradora.txt", true);
-            sw.WriteLine(teste);
-            sw.Close();
+            //StreamWriter sw = new StreamWriter("/~/Documents/curso_csharp/Modulo4/Trabalho1/BancoDeDados/Administradora.txt", true);
+            //sw.WriteLine(teste);
+            //sw.Close();
+
+            Console.WriteLine(teste);
         }
         catch (Exception e)
         {

@@ -26,3 +26,17 @@
 /home/carlos/Documents/Trabalho1/obj/Debug/net7.0/Trabalho1.pdb
 /home/carlos/Documents/Trabalho1/obj/Debug/net7.0/Trabalho1.genruntimeconfig.cache
 /home/carlos/Documents/Trabalho1/obj/Debug/net7.0/ref/Trabalho1.dll
+/var/www/html/estudos/C#/equipe_fortran/obj/Debug/net7.0/Trabalho1.GeneratedMSBuildEditorConfig.editorconfig
+/var/www/html/estudos/C#/equipe_fortran/obj/Debug/net7.0/Trabalho1.AssemblyInfoInputs.cache
+/var/www/html/estudos/C#/equipe_fortran/obj/Debug/net7.0/Trabalho1.AssemblyInfo.cs
+/var/www/html/estudos/C#/equipe_fortran/obj/Debug/net7.0/Trabalho1.csproj.CoreCompileInputs.cache
+/var/www/html/estudos/C#/equipe_fortran/obj/Debug/net7.0/Trabalho1.dll
+/var/www/html/estudos/C#/equipe_fortran/obj/Debug/net7.0/refint/Trabalho1.dll
+/var/www/html/estudos/C#/equipe_fortran/obj/Debug/net7.0/Trabalho1.pdb
+/var/www/html/estudos/C#/equipe_fortran/bin/Debug/net7.0/Trabalho1
+/var/www/html/estudos/C#/equipe_fortran/bin/Debug/net7.0/Trabalho1.deps.json
+/var/www/html/estudos/C#/equipe_fortran/bin/Debug/net7.0/Trabalho1.runtimeconfig.json
+/var/www/html/estudos/C#/equipe_fortran/bin/Debug/net7.0/Trabalho1.dll
+/var/www/html/estudos/C#/equipe_fortran/bin/Debug/net7.0/Trabalho1.pdb
+/var/www/html/estudos/C#/equipe_fortran/obj/Debug/net7.0/Trabalho1.genruntimeconfig.cache
+/var/www/html/estudos/C#/equipe_fortran/obj/Debug/net7.0/ref/Trabalho1.dll
