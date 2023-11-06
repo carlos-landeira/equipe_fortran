@@ -89,8 +89,8 @@ namespace equipe_fortran.Views
         private void ExibirAdministradora(Administradora administradora)
         {
             Console.WriteLine($"Id: {administradora.Id}");
-            Console.WriteLine($"Nome: {administradora.Nome}");
-            Console.WriteLine($"Documento: {administradora.Documento}");
+            Console.WriteLine($"Nome: {administradora.NomeEmpresa}");
+            Console.WriteLine($"Documento: {administradora.Cnpj}");
             Console.WriteLine($"Condomínios: {administradora.Condominios}");
         }
     }

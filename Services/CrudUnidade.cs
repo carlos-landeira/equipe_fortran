@@ -70,6 +70,7 @@ public class CrudUnidade<T>: ICrud<Unidade>
             }
             
             sw.Close();
+            AtualizarNoCondominio(model);
         }
         else
         {
@@ -97,6 +98,26 @@ public class CrudUnidade<T>: ICrud<Unidade>
         else
         {
             Console.WriteLine("Unidade não encontrada");
+        }
+    }
+    
+    private void AtualizarNoCondominio(Unidade model)
+    {
+        CrudCondominio crudCondominio = new CrudCondominio();
+        List<Condominio> condominios = crudCondominio.Read().ToList();
+
+        foreach (var condominio in condominios)
+        {
+            foreach (var unidade in condominio.Unidades)
+            {
+                if (unidade.Id == model.Id)
+                {
+                    unidade.Nome = model.Nome;
+                    unidade.Morador = model.Morador;
+                    
+                    crudCondominio.Update(condominio);
+                }
+            }
         }
     }
 }

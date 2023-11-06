@@ -62,6 +62,7 @@ public class CrudMorador: ICrud<Morador>
             }
             
             sw.Close();
+            AtualizarNaUnidade(model);
         }
         else
         {
@@ -89,6 +90,23 @@ public class CrudMorador: ICrud<Morador>
         else
         {
             Console.WriteLine("Morador não encontrado");
+        }
+    }
+
+    private void AtualizarNaUnidade(Morador model)
+    {
+        CrudUnidade<Unidade> crudUnidade = new CrudUnidade<Unidade>();
+        List<Unidade> unidades = crudUnidade.Read().ToList();
+
+        foreach (var unidade in unidades)
+        {
+            if (unidade.Morador.Id == model.Id)
+            {
+                unidade.Morador.Nome = model.Nome;
+                unidade.Morador.DataNascimento = model.DataNascimento;
+                    
+                crudUnidade.Update(unidade);
+            }
         }
     }
 }
