@@ -24,9 +24,10 @@ namespace equipe_fortran.Views
                         Nome = RequisitarValor("Digite o nome da administradora:"),
                         Documento = RequisitarValor("Digite o documento:"),
                     };
-
-
-
+                    
+                    int[] idsCondominios = Array.ConvertAll(RequisitarValor("Digite os identificadores dos condomínios separados por ',': ").Split(','), int.Parse);
+                    administradora.Condominios = VincularCondominios(idsCondominios);
+                    
                     crud.Create(administradora);
                     break;
                 case ACAO_VISUALIZAR:
@@ -64,15 +65,16 @@ namespace equipe_fortran.Views
             }
         }
 
-        private List<Condominio> VincularCondominios()
+        private List<Condominio> VincularCondominios(int[] ids)
         {
-            CrudCondominio crudCondominio = new CrudCondominio();
             List<Condominio> condominios = new List<Condominio>();
 
-            do
+            foreach (var id in ids)
             {
-                
-            } while (true);
+                condominios.Add(Condominio.FindById(id));
+            }
+
+            return condominios;
         }
 
         private void ExibirAdministradora(Administradora administradora)

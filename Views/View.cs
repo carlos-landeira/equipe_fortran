@@ -58,11 +58,11 @@ public class View
         DateTime dataAtual = DateTime.Now;
         string saudacao;
 
-        if (dataAtual.Hour >= 6 && dataAtual.Hour <= 11)
+        if (dataAtual.Hour is >= 6 and <= 11)
         {
             saudacao = "Bom dia!";
         }
-        else if (dataAtual.Hour >= 12 && dataAtual.Hour <= 17)
+        else if (dataAtual.Hour is >= 12 and <= 17)
         {
             saudacao = "Boa tarde!";
         }

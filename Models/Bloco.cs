@@ -11,6 +11,8 @@ public class Bloco: BaseModel
     public Bloco()
     {
         this.Id = ProximoId++;
+        this.UnidadesComerciais = new List<UnidadeComercial>();
+        this.UnidadeResidenciais = new List<UnidadeResidencial>();
     }
 
     public string ToString()
@@ -26,6 +28,11 @@ public class Bloco: BaseModel
         foreach (var unidade in unidades)
         {
             resultado += $"{unidade.Id},";
+        }
+
+        if (resultado.Length > 1)
+        {
+            resultado = resultado.Remove(resultado.Length - 1, 1);
         }
 
         return resultado;

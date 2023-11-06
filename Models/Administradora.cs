@@ -26,15 +26,20 @@ public class Administradora: PessoaJuridica
 
     public string ToString()
     {
-        string condominios = ";";
+        if (Condominios.Count > 0)
+        {
+            string condominios = ";";
 
-        foreach (var condominio in Condominios)
-        { 
-            condominios += $"{condominio.Nome}, ";
+            foreach (var condominio in Condominios)
+            { 
+                condominios += $"{condominio.Id},";
+            }
+
+            condominios = condominios.Remove(condominios.Length - 1, 1); // Remover a última ','
+
+            return base.ToString() + condominios;
         }
 
-        condominios.Substring(condominios.Length - 3);
-
-        return base.ToString() + condominios;
+        return base.ToString();
     }
 }
