@@ -8,9 +8,8 @@ public class View
 {
     const string OPCOES_ADMINISTRADORA = "1";
     const string OPCOES_CONDOMINIO = "2";
-    const string OPCOES_BLOCOS = "3";
-    const string OPCOES_UNIDADES = "4";
-    const string OPCOES_MORADORES = "5";
+    const string OPCOES_UNIDADES = "3";
+    const string OPCOES_MORADORES = "4";
     public const string ACAO_CRIAR = "1";
     public const string ACAO_VISUALIZAR = "2";
     public const string ACAO_EDITAR = "3";
@@ -33,10 +32,6 @@ public class View
                 case OPCOES_CONDOMINIO:
                     CondominioView condominioView = new();
                     condominioView.Main();
-                    break;
-                case OPCOES_BLOCOS:
-                    BlocoView blocoView = new();
-                    blocoView.Main();
                     break;
                 case OPCOES_UNIDADES:
                     UnidadeView unidadeView = new();
@@ -105,7 +100,6 @@ public class View
         Console.WriteLine("Digite o que você deseja acessar:");
         Console.WriteLine($"{OPCOES_ADMINISTRADORA} - Administradoras");
         Console.WriteLine($"{OPCOES_CONDOMINIO} - Condominios");
-        Console.WriteLine($"{OPCOES_BLOCOS} - Blocos");
         Console.WriteLine($"{OPCOES_UNIDADES} - Unidades");
         Console.WriteLine($"{OPCOES_MORADORES} - Moradores");
     }

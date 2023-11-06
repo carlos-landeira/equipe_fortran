@@ -23,11 +23,9 @@ namespace equipe_fortran.Views
                     {
                         NomeEmpresa = RequisitarValor("Digite o nome da administradora:"),
                         Cnpj = RequisitarValor("Digite o documento:"),
+                        Condominios = VincularCondominios()
                     };
-                    
-                    int[] idsCondominios = Array.ConvertAll(RequisitarValor("Digite os identificadores dos condomínios separados por ',': ").Split(','), int.Parse);
-                    administradora.Condominios = VincularCondominios(idsCondominios);
-                    
+
                     crud.Create(administradora);
                     break;
                 case ACAO_VISUALIZAR:
@@ -65,13 +63,24 @@ namespace equipe_fortran.Views
             }
         }
 
-        private List<Condominio> VincularCondominios(int[] ids)
+        private List<Condominio> VincularCondominios()
         {
+            CrudCondominio crudCondominio = new CrudCondominio();
             List<Condominio> condominios = new List<Condominio>();
+            List<Condominio> condominiosCadastrados = crudCondominio.Read().ToList();
 
-            foreach (var id in ids)
+            if (condominiosCadastrados.Count > 0)
             {
-                condominios.Add(Condominio.FindById(id));
+                int[] idsCondominios = Array.ConvertAll(RequisitarValor("Digite os identificadores dos condomínios separados por ',': ").Split(','), int.Parse);
+
+                foreach (var id in idsCondominios)
+                {
+                    condominios.Add(Condominio.FindById(id));
+                }
+            } 
+            else 
+            {
+                Console.WriteLine("Cadastre um condomínio e depois vincule-o à administradora!");
             }
 
             return condominios;
