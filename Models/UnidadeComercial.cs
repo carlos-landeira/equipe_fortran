@@ -11,10 +11,10 @@ public class UnidadeComercial: Unidade
         this.Id = ProximoId++;
     }
 
-    public static UnidadeComercial FindById(int id)
+    public static Unidade FindById(int id)
     {
         CrudUnidade<UnidadeComercial> crudUnidade = new CrudUnidade<UnidadeComercial>();
-        List<UnidadeComercial> unidadesComerciais = crudUnidade.Read().ToList();
+        List<Unidade> unidadesComerciais = crudUnidade.Read().ToList().Cast<Unidade>().ToList();
 
         return unidadesComerciais.Find(x => x.Id == id) ?? new UnidadeComercial();
     }

@@ -1,9 +1,11 @@
+using System.Text.Json;
 using Trabalho1.Models;
 
 namespace Trabalho1.Services;
 
 public class CrudAdministradora: ICrud<Administradora>
 {
+    public static List<Administradora> AdministradorasCriadas = new List<Administradora>();
     
     public IEnumerable<Administradora> Read()
     {
@@ -16,8 +18,7 @@ public class CrudAdministradora: ICrud<Administradora>
             linha = sr.ReadLine();
             while (linha != null)
             {
-                var administradora = linha.Split(';');
-                Administradora model = new Administradora { Id = Convert.ToInt32(administradora[0]), Nome = administradora[1], Documento = administradora[2] };
+                Administradora model = JsonSerializer.Deserialize<Administradora>(linha);
                 lista.Add(model);
                 linha = sr.ReadLine();
             }
@@ -37,7 +38,7 @@ public class CrudAdministradora: ICrud<Administradora>
         try
         {
             StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Administradora.txt", true);
-            sw.WriteLine(model.ToString());
+            sw.WriteLine(JsonSerializer.Serialize(model));
             sw.Close();
         }
         catch (Exception e)
@@ -53,13 +54,13 @@ public class CrudAdministradora: ICrud<Administradora>
 
         if (administradoraParaAtualizar != null)
         {
-            administradoraParaAtualizar.Nome = model.Nome;
-            administradoraParaAtualizar.Documento = model.Documento;
+            administradoraParaAtualizar.NomeEmpresa = model.NomeEmpresa;
+            administradoraParaAtualizar.Cnpj = model.Cnpj;
             
             StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Administradora.txt");
             foreach (var administradora in lista)
             {
-                sw.WriteLine($"{administradora.Id};{administradora.Nome};{administradora.Documento}");
+                sw.WriteLine(JsonSerializer.Serialize(administradora));
             }
             
             sw.Close();
@@ -82,7 +83,7 @@ public class CrudAdministradora: ICrud<Administradora>
             StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Administradora.txt");
             foreach (var administradora in lista)
             {
-                sw.WriteLine(administradora.ToString());
+                sw.WriteLine(JsonSerializer.Serialize(administradora));
             }
             
             sw.Close();

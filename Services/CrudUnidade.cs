@@ -1,12 +1,13 @@
+using System.Text.Json;
 using Trabalho1.Models;
 
 namespace Trabalho1.Services;
 
-public class CrudUnidade<T>: ICrud<T> where T: Unidade, new()
+public class CrudUnidade<T>: ICrud<Unidade>
 {
-    public IEnumerable<T> Read()
+    public IEnumerable<Unidade> Read()
     {
-        List<T> lista = new List<T>();
+        List<Unidade> lista = new List<Unidade>();
         string linha;
         
         try
@@ -15,13 +16,15 @@ public class CrudUnidade<T>: ICrud<T> where T: Unidade, new()
             linha = sr.ReadLine();
             while (linha != null)
             {
-                var unidade = linha.Split(';');
-                T model = new T
-                {
-                    Id = Convert.ToInt32(unidade[0]),
-                    Nome = unidade[1],
-                    Morador = Morador.FindById(int.Parse(unidade[2]))
-                };
+                // var unidade = linha.Split(';');
+                // T model = new T
+                // {
+                //     Id = Convert.ToInt32(unidade[0]),
+                //     Nome = unidade[1],
+                //     Morador = Morador.FindById(int.Parse(unidade[2]))
+                // };
+                
+                Unidade model = JsonSerializer.Deserialize<Unidade>(linha);
                 lista.Add(model);
                 linha = sr.ReadLine();
             }
@@ -36,12 +39,12 @@ public class CrudUnidade<T>: ICrud<T> where T: Unidade, new()
         return lista;
     }
 
-    public void Create(T model)
+    public void Create(Unidade model)
     {
         try
         {
             StreamWriter sw = new StreamWriter($"/home/carlos/Documents/Trabalho1/BancoDeDados/{typeof(T).Name}.txt", true);
-            sw.WriteLine(model.ToString());
+            sw.WriteLine(JsonSerializer.Serialize(model));
             sw.Close();
         }
         catch (Exception e)
@@ -50,9 +53,9 @@ public class CrudUnidade<T>: ICrud<T> where T: Unidade, new()
         }
     }
 
-    public void Update(T model)
+    public void Update(Unidade model)
     {
-        List<T> lista = Read().ToList();
+        List<Unidade> lista = Read().ToList();
         Unidade unidadeParaAtualizar = lista.Find(x => x.Id == model.Id);
 
         if (unidadeParaAtualizar != null)
@@ -63,10 +66,11 @@ public class CrudUnidade<T>: ICrud<T> where T: Unidade, new()
             StreamWriter sw = new StreamWriter($"/home/carlos/Documents/Trabalho1/BancoDeDados/{typeof(T).Name}.txt");
             foreach (var unidade in lista)
             {
-                sw.WriteLine(unidade.ToString());
+                sw.WriteLine(JsonSerializer.Serialize(unidade));
             }
             
             sw.Close();
+            AtualizarNoCondominio(model);
         }
         else
         {
@@ -76,9 +80,9 @@ public class CrudUnidade<T>: ICrud<T> where T: Unidade, new()
 
     public void Delete(int id)
     {
-        List<T> lista = Read().ToList();
+        List<Unidade> lista = Read().ToList();
         
-        T unidadeParaRemover = lista.Find(x => x.Id == id);
+        Unidade unidadeParaRemover = lista.Find(x => x.Id == id);
 
         if (unidadeParaRemover != null)
         {
@@ -86,7 +90,7 @@ public class CrudUnidade<T>: ICrud<T> where T: Unidade, new()
             StreamWriter sw = new StreamWriter($"/home/carlos/Documents/Trabalho1/BancoDeDados/{typeof(T).Name}.txt");
             foreach (var unidade in lista)
             {
-                sw.WriteLine(unidade.ToString());
+                sw.WriteLine(JsonSerializer.Serialize(unidade));
             }
             
             sw.Close();
@@ -94,6 +98,26 @@ public class CrudUnidade<T>: ICrud<T> where T: Unidade, new()
         else
         {
             Console.WriteLine("Unidade não encontrada");
+        }
+    }
+    
+    private void AtualizarNoCondominio(Unidade model)
+    {
+        CrudCondominio crudCondominio = new CrudCondominio();
+        List<Condominio> condominios = crudCondominio.Read().ToList();
+
+        foreach (var condominio in condominios)
+        {
+            foreach (var unidade in condominio.Unidades)
+            {
+                if (unidade.Id == model.Id)
+                {
+                    unidade.Nome = model.Nome;
+                    unidade.Morador = model.Morador;
+                    
+                    crudCondominio.Update(condominio);
+                }
+            }
         }
     }
 }

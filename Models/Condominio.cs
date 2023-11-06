@@ -4,13 +4,14 @@ namespace Trabalho1.Models;
 
 public class Condominio: PessoaJuridica
 {
-    public List<Bloco> Blocos { get; set; }
+    public List<Unidade> Unidades { get; set; }
+    
     private static int ProximoId;
 
     public Condominio()
     {
         this.Id = ProximoId++;
-        this.Blocos = new List<Bloco>();
+        this.Unidades = new List<Unidade>();
     }
 
     public static Condominio FindById(int id)
@@ -23,18 +24,18 @@ public class Condominio: PessoaJuridica
 
     public string ToString()
     {
-        if (Blocos.Count > 0)
+        if (Unidades.Count > 0)
         {
-            string blocos = ";";
+            string unidades = ";";
 
-            foreach (var bloco in Blocos)
+            foreach (var unidade in Unidades)
             { 
-                blocos += $"{bloco.Id},";
+                unidades += $"{unidade.Id},";
             }
 
-            blocos = blocos.Remove(blocos.Length - 1, 1); // Remover a última ','
+            unidades = unidades.Remove(unidades.Length - 1, 1); // Remover a última ','
 
-            return base.ToString() + blocos;
+            return base.ToString() + unidades;
         }
 
         return base.ToString();

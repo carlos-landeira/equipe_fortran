@@ -19,8 +19,8 @@ namespace equipe_fortran.Views
                 case ACAO_CRIAR:
                     Condominio condominio = new Condominio
                     {
-                        Nome = RequisitarValor("Digite o nome do condomínio:"),
-                        Documento = RequisitarValor("Digite o documento:"),
+                        NomeEmpresa = RequisitarValor("Digite o nome do condomínio:"),
+                        Cnpj = RequisitarValor("Digite o documento:"),
                         Unidades = VincularUnidades()
                     };
 
@@ -87,8 +87,8 @@ namespace equipe_fortran.Views
         private void ExibirCondominio(Condominio condominio)
         {
             Console.WriteLine($"Id: {condominio.Id}");
-            Console.WriteLine($"Nome: {condominio.Nome}");
-            Console.WriteLine($"Documento: {condominio.Documento}");
+            Console.WriteLine($"Nome: {condominio.NomeEmpresa}");
+            Console.WriteLine($"Documento: {condominio.Cnpj}");
 
             List<Unidade> unidades = condominio.Unidades.ToList();
 

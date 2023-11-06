@@ -17,8 +17,8 @@ namespace equipe_fortran.Views
                 case ACAO_CRIAR:
                     Administradora administradora = new Administradora
                     {
-                        Nome = RequisitarValor("Digite o nome da administradora:"),
-                        Documento = RequisitarValor("Digite o documento:"),
+                        NomeEmpresa = RequisitarValor("Digite o nome da administradora:"),
+                        Cnpj = RequisitarValor("Digite o documento:"),
                         Condominios = VincularCondominios()
                     };
 
@@ -85,8 +85,8 @@ namespace equipe_fortran.Views
         private void ExibirAdministradora(Administradora administradora)
         {
             Console.WriteLine($"Id: {administradora.Id}");
-            Console.WriteLine($"Nome: {administradora.Nome}");
-            Console.WriteLine($"Documento: {administradora.Documento}");
+            Console.WriteLine($"Nome: {administradora.NomeEmpresa}");
+            Console.WriteLine($"Documento: {administradora.Cnpj}");
 
             List<Condominio> condominios = administradora.Condominios.ToList();
 

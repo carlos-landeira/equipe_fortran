@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Trabalho1.Models;
 
 namespace Trabalho1.Services;
@@ -15,8 +16,7 @@ public class CrudMorador: ICrud<Morador>
             linha = sr.ReadLine();
             while (linha != null)
             {
-                var morador = linha.Split(';');
-                Morador model = new Morador { Id = Convert.ToInt32(morador[0]), Nome = morador[1], DataNascimento = morador[2] };
+                Morador model = JsonSerializer.Deserialize<Morador>(linha);
                 lista.Add(model);
                 linha = sr.ReadLine();
             }
@@ -36,7 +36,7 @@ public class CrudMorador: ICrud<Morador>
         try
         {
             StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Morador.txt", true);
-            sw.WriteLine(model.ToString());
+            sw.WriteLine(JsonSerializer.Serialize(model));
             sw.Close();
         }
         catch (Exception e)
@@ -58,10 +58,11 @@ public class CrudMorador: ICrud<Morador>
             StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Morador.txt");
             foreach (var morador in lista)
             {
-                sw.WriteLine(morador.ToString());
+                sw.WriteLine(JsonSerializer.Serialize(morador));
             }
             
             sw.Close();
+            AtualizarNaUnidade(model);
         }
         else
         {
@@ -81,7 +82,7 @@ public class CrudMorador: ICrud<Morador>
             StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Morador.txt");
             foreach (var morador in lista)
             {
-                sw.WriteLine(morador.ToString());
+                sw.WriteLine(JsonSerializer.Serialize(morador));
             }
             
             sw.Close();
@@ -89,6 +90,23 @@ public class CrudMorador: ICrud<Morador>
         else
         {
             Console.WriteLine("Morador não encontrado");
+        }
+    }
+
+    private void AtualizarNaUnidade(Morador model)
+    {
+        CrudUnidade<Unidade> crudUnidade = new CrudUnidade<Unidade>();
+        List<Unidade> unidades = crudUnidade.Read().ToList();
+
+        foreach (var unidade in unidades)
+        {
+            if (unidade.Morador.Id == model.Id)
+            {
+                unidade.Morador.Nome = model.Nome;
+                unidade.Morador.DataNascimento = model.DataNascimento;
+                    
+                crudUnidade.Update(unidade);
+            }
         }
     }
 }

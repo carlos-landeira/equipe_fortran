@@ -1,0 +1,1 @@
+{"Condominios":[{"Unidades":[],"NomeEmpresa":"teste1","Cnpj":"11","Id":0}],"NomeEmpresa":"pll","Cnpj":"76","Id":0}
