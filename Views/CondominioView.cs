@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Trabalho1.Models;
 using Trabalho1.Services;
 using Trabalho1.Views;
@@ -15,7 +11,7 @@ namespace equipe_fortran.Views
         public override void Main()
         {
             CrudCondominio crud = new CrudCondominio();
-            
+
             ExibirOpcoesCrud("condomínios");
 
             switch (ObterEscolhaUsuario())
@@ -24,7 +20,8 @@ namespace equipe_fortran.Views
                     Condominio condominio = new Condominio
                     {
                         Nome = RequisitarValor("Digite o nome do condomínio:"),
-                        Documento = RequisitarValor("Digite o documento:")
+                        Documento = RequisitarValor("Digite o documento:"),
+                        Unidades = VincularUnidades()
                     };
 
                     crud.Create(condominio);
@@ -64,12 +61,41 @@ namespace equipe_fortran.Views
             }
         }
 
+        private List<Unidade> VincularUnidades()
+        {
+            CrudUnidade crudUnidade = new CrudUnidade();
+            List<Unidade> unidades = new List<Unidade>();
+            List<Unidade> unidadesCadastradas = crudUnidade.Read().ToList();
+
+            if (unidadesCadastradas.Count > 0)
+            {
+                int[] idsUnidades = Array.ConvertAll(RequisitarValor("Digite os identificadores das unidades separados por ',': ").Split(','), int.Parse);
+
+                foreach (var id in idsUnidades)
+                {
+                    unidades.Add(Unidade.FindById(id));
+                }
+            }
+            else
+            {
+                Console.WriteLine("Cadastre uma unidade e depois vincule-a ao condomínio!");
+            }
+
+            return unidades;
+        }
+
         private void ExibirCondominio(Condominio condominio)
         {
             Console.WriteLine($"Id: {condominio.Id}");
             Console.WriteLine($"Nome: {condominio.Nome}");
             Console.WriteLine($"Documento: {condominio.Documento}");
-            //Console.WriteLine($"Blocos: {condominio.Blocos}");
+
+            List<Unidade> unidades = condominio.Unidades.ToList();
+
+            foreach (var unidade in unidades)
+            {
+                Console.WriteLine($"Unidade {unidade.Id}: {unidade.Nome}");    
+            }
         }
     }
 }

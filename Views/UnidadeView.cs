@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Trabalho1.Models;
+using Trabalho1.Services;
 using Trabalho1.Views;
 
 namespace equipe_fortran.Views
@@ -25,11 +26,25 @@ namespace equipe_fortran.Views
 
                     if (tipoUnidade == UNIDADE_TIPO_RESIDENCIAL)
                     {
+                        CrudUnidade<UnidadeResidencial> crudR = new CrudUnidade<UnidadeResidencial>();
+                        UnidadeResidencial unidadeR = new UnidadeResidencial()
+                        {
+                            Nome = RequisitarValor("Digite o nome da unidade"),
+                            Morador = VincularMorador()
+                        };
 
+                        crudR.Create(unidadeR);
                     }
                     else
                     {
+                        CrudUnidade<UnidadeComercial> crudC = new CrudUnidade<UnidadeComercial>();
+                        UnidadeComercial unidadeC = new UnidadeComercial()
+                        {
+                            Nome = RequisitarValor("Digite o nome da unidade"),
+                            Morador = VincularMorador()
+                        };
 
+                        crudC.Create(unidadeC);
                     }
                     break;
                 case ACAO_VISUALIZAR:
@@ -67,6 +82,26 @@ namespace equipe_fortran.Views
             }
         }
 
+        private Morador VincularMorador()
+        {
+            CrudMorador crudMorador = new CrudMorador();
+            Morador morador = new Morador();
+            List<Morador> moradoresCadastrados = crudMorador.Read().ToList();
+
+            if (moradoresCadastrados.Count > 0)
+            {
+                int idMorador = int.Parse(RequisitarValor("Insira o identificador do morador da unidade:"));
+
+                morador = Morador.FindById(idMorador);
+            }
+            else
+            {
+                Console.WriteLine("Cadastre um morador e depois vincule-o à unidade!");
+            }
+
+            return morador;
+        }
+
         private void ExibirOpcoesTipoUnidade()
         {
             Console.WriteLine("Qual o tipo da unidade a ser cadastrada?");
@@ -78,7 +113,7 @@ namespace equipe_fortran.Views
         {
             Console.WriteLine($"Id: {unidade.Id}");
             Console.WriteLine($"Nome: {unidade.Nome}");
-            //Console.WriteLine($"Moradores: {unidades.Moradores}");
+            Console.WriteLine($"Morador: {unidade.Morador.Nome}");
         }
     }
 }

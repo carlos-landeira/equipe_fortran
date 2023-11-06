@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Trabalho1.Models;
 using Trabalho1.Services;
 using Trabalho1.Views;
@@ -91,7 +87,13 @@ namespace equipe_fortran.Views
             Console.WriteLine($"Id: {administradora.Id}");
             Console.WriteLine($"Nome: {administradora.Nome}");
             Console.WriteLine($"Documento: {administradora.Documento}");
-            Console.WriteLine($"Condomínios: {administradora.Condominios}");
+
+            List<Condominio> condominios = administradora.Condominios.ToList();
+
+            foreach (var condominio in condominios)
+            {
+                Console.WriteLine($"Condomínio {condominio.Id}: {condominio.NomeEmpresa}");    
+            }
         }
     }
 }
