@@ -21,8 +21,8 @@ namespace equipe_fortran.Views
                 case ACAO_CRIAR:
                     Administradora administradora = new Administradora
                     {
-                        Nome = RequisitarValor("Digite o nome da administradora:"),
-                        Documento = RequisitarValor("Digite o documento:"),
+                        NomeEmpresa = RequisitarValor("Digite o nome da administradora:"),
+                        Cnpj = RequisitarValor("Digite o documento:"),
                     };
                     
                     int[] idsCondominios = Array.ConvertAll(RequisitarValor("Digite os identificadores dos condomínios separados por ',': ").Split(','), int.Parse);
