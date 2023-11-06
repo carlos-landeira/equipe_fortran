@@ -29,7 +29,7 @@ namespace equipe_fortran.Views
                 case ACAO_VISUALIZAR:
                     IEnumerable<Condominio> listaCondominios = crud.Read();
 
-                    if (listaCondominios != null)
+                    if (listaCondominios.Count() == 0)
                     {
                         Console.WriteLine("Não há nenhum condomínio cadastrado.");
                     }
@@ -47,6 +47,10 @@ namespace equipe_fortran.Views
 
                     Condominio condAtualizacao = crud.Read().ToList().Find(a => a.Id == idAtualizacao);
 
+                    condAtualizacao.NomeEmpresa = RequisitarValor("Digite o novo nome:");
+                    condAtualizacao.Cnpj = RequisitarValor("Digite o novo CNPJ:");
+                    condAtualizacao.Unidades = VincularUnidades();
+
                     crud.Update(condAtualizacao);
                     break;
                 case ACAO_EXCLUIR:
@@ -63,7 +67,7 @@ namespace equipe_fortran.Views
 
         private List<Unidade> VincularUnidades()
         {
-            CrudUnidade crudUnidade = new CrudUnidade();
+            CrudUnidade<Unidade> crudUnidade = new CrudUnidade<Unidade>();
             List<Unidade> unidades = new List<Unidade>();
             List<Unidade> unidadesCadastradas = crudUnidade.Read().ToList();
 
@@ -73,7 +77,7 @@ namespace equipe_fortran.Views
 
                 foreach (var id in idsUnidades)
                 {
-                    unidades.Add(Unidade.FindById(id));
+                    //unidades.Add(Unidade.FindById(id));
                 }
             }
             else
@@ -94,7 +98,7 @@ namespace equipe_fortran.Views
 
             foreach (var unidade in unidades)
             {
-                Console.WriteLine($"Unidade {unidade.Id}: {unidade.Nome}");    
+                Console.WriteLine($"Unidade {unidade.Id}: {unidade.Nome}");
             }
         }
     }

@@ -29,7 +29,7 @@ namespace equipe_fortran.Views
                 case ACAO_VISUALIZAR:
                     IEnumerable<Morador> listaMoradores = crud.Read();
 
-                    if (listaMoradores != null)
+                    if (listaMoradores.Count() == 0)
                     {
                         Console.WriteLine("Não há nenhum morador cadastrado.");
                     }
@@ -46,6 +46,8 @@ namespace equipe_fortran.Views
                     int idAtualizacao = int.Parse(Console.ReadLine());
 
                     Morador moradorAtualizacao = crud.Read().ToList().Find(a => a.Id == idAtualizacao);
+
+                    moradorAtualizacao.Nome = RequisitarValor("Digite o novo nome:");
 
                     crud.Update(moradorAtualizacao);
                     break;

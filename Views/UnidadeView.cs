@@ -50,7 +50,7 @@ namespace equipe_fortran.Views
                 case ACAO_VISUALIZAR:
                     //IEnumerable<Unidade> listaUnidades = crud.Read();
 
-                    // if (listaUnidades != null)
+                    // if (listaUnidades.Count() == 0)
                     // {
                     //     Console.WriteLine("Não há nenhuma unidade cadastrado.");
                     // }
@@ -67,6 +67,7 @@ namespace equipe_fortran.Views
                     int idAtualizacao = int.Parse(Console.ReadLine());
 
                     // Unidade unidadeAtualizacao = crud.Read().ToList().Find(a => a.Id == idAtualizacao);
+                    // unidadeAtualizacao.Nome = RequisitarValor("Digite o novo nome:");
 
                     // crud.Update(unidadeAtualizacao);
                     break;

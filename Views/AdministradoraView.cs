@@ -27,7 +27,7 @@ namespace equipe_fortran.Views
                 case ACAO_VISUALIZAR:
                     IEnumerable<Administradora> listaAdministradoras = crud.Read();
 
-                    if (listaAdministradoras != null)
+                    if (listaAdministradoras.Count() == 0)
                     {
                         Console.WriteLine("Não há nenhuma administradora cadastrada.");
                     }
@@ -44,6 +44,10 @@ namespace equipe_fortran.Views
                     int idAtualizacao = int.Parse(Console.ReadLine());
 
                     Administradora admAtualizacao = crud.Read().ToList().Find(a => a.Id == idAtualizacao);
+
+                    admAtualizacao.NomeEmpresa = RequisitarValor("Digite o novo nome:");
+                    admAtualizacao.Cnpj = RequisitarValor("Digite o novo documento:");
+                    admAtualizacao.Condominios = VincularCondominios();
 
                     crud.Update(admAtualizacao);
                     break;
