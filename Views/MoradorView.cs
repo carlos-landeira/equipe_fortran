@@ -70,6 +70,7 @@ namespace equipe_fortran.Views
             Console.WriteLine($"Id: {morador.Id}");
             Console.WriteLine($"Nome: {morador.Nome}");
             Console.WriteLine($"Data de Nascimento: {morador.DataNascimento}");
+            Console.WriteLine("\n-----------------------------\n");
         }
     }
 }

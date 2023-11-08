@@ -192,6 +192,7 @@ namespace equipe_fortran.Views
             Console.WriteLine($"Condomínio: {unidade.Condominio.NomeEmpresa}");
             Console.WriteLine($"Nome: {unidade.Nome}");
             Console.WriteLine($"Morador: {unidade.Morador.Nome}");
+            Console.WriteLine("\n-----------------------------\n");
         }
     }
 }

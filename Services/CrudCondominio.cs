@@ -62,7 +62,6 @@ public class CrudCondominio: ICrud<Condominio>
             }
             
             sw.Close();
-            // AtualizarNaAdministradora(model);
             AtualizarNasUnidades(model);
         }
         else
@@ -93,26 +92,6 @@ public class CrudCondominio: ICrud<Condominio>
             Console.WriteLine("Condomínio não encontrado");
         }
     }
-
-    // private void AtualizarNaAdministradora(Condominio model)
-    // {
-    //     CrudAdministradora crudAdministradora = new CrudAdministradora();
-    //     List<Administradora> administradoras = crudAdministradora.Read().ToList();
-    //
-    //     foreach (var administradora in administradoras)
-    //     {
-    //         foreach (var condominio in administradora.Condominios)
-    //         {
-    //             if (condominio.Cnpj == model.Cnpj)
-    //             {
-    //                 condominio.NomeEmpresa = model.NomeEmpresa;
-    //                 condominio.Cnpj = model.Cnpj;
-    //                 
-    //                 crudAdministradora.Update(administradora);
-    //             }
-    //         }
-    //     }
-    // }
     
     private void AtualizarNasUnidades(Condominio model)
     {

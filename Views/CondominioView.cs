@@ -89,6 +89,7 @@ namespace equipe_fortran.Views
             Console.WriteLine($"Administradora: {condominio.Administradora.NomeEmpresa}");
             Console.WriteLine($"Nome: {condominio.NomeEmpresa}");
             Console.WriteLine($"Documento: {condominio.Cnpj}");
+            Console.WriteLine("\n-----------------------------\n");
         }
     }
 }

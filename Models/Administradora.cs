@@ -9,18 +9,5 @@ public class Administradora: PessoaJuridica
     public Administradora()
     {
         this.Id = ProximoId++;
-        // this.Condominios = new List<Condominio>();
     }
-
-    // public static List<Condominio> ObterCondominiosPorId(int[] ids)
-    // {
-    //     List<Condominio> condominios = new List<Condominio>();
-    //
-    //     foreach (var id in ids)
-    //     {
-    //         condominios.Add(Condominio.FindById(id));
-    //     }
-    //
-    //     return condominios;
-    // }
 }

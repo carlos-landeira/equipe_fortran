@@ -1,1 +1,2 @@
 {"NomeEmpresa":"adm1","Cnpj":"354345345","Id":0}
+{"NomeEmpresa":"teste2","Cnpj":"55555","Id":1}

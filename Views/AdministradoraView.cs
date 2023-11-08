@@ -66,6 +66,7 @@ namespace equipe_fortran.Views
             Console.WriteLine($"Id: {administradora.Id}");
             Console.WriteLine($"Nome: {administradora.NomeEmpresa}");
             Console.WriteLine($"Documento: {administradora.Cnpj}");
+            Console.WriteLine("\n-----------------------------\n");
         }
     }
 }
