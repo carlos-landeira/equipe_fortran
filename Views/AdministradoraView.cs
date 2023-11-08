@@ -18,8 +18,7 @@ namespace equipe_fortran.Views
                     Administradora administradora = new Administradora
                     {
                         NomeEmpresa = RequisitarValor("Digite o nome da administradora:"),
-                        Cnpj = RequisitarValor("Digite o documento:"),
-                        Condominios = VincularCondominios()
+                        Cnpj = RequisitarValor("Digite o documento:")
                     };
 
                     crud.Create(administradora);
@@ -47,7 +46,6 @@ namespace equipe_fortran.Views
 
                     admAtualizacao.NomeEmpresa = RequisitarValor("Digite o novo nome:");
                     admAtualizacao.Cnpj = RequisitarValor("Digite o novo documento:");
-                    admAtualizacao.Condominios = VincularCondominios();
 
                     crud.Update(admAtualizacao);
                     break;
@@ -63,41 +61,11 @@ namespace equipe_fortran.Views
             }
         }
 
-        private List<Condominio> VincularCondominios()
-        {
-            CrudCondominio crudCondominio = new CrudCondominio();
-            List<Condominio> condominios = new List<Condominio>();
-            List<Condominio> condominiosCadastrados = crudCondominio.Read().ToList();
-
-            if (condominiosCadastrados.Count > 0)
-            {
-                int[] idsCondominios = Array.ConvertAll(RequisitarValor("Digite os identificadores dos condomínios separados por ',': ").Split(','), int.Parse);
-
-                foreach (var id in idsCondominios)
-                {
-                    condominios.Add(Condominio.FindById(id));
-                }
-            } 
-            else 
-            {
-                Console.WriteLine("Cadastre um condomínio e depois vincule-o à administradora!");
-            }
-
-            return condominios;
-        }
-
         private void ExibirAdministradora(Administradora administradora)
         {
             Console.WriteLine($"Id: {administradora.Id}");
             Console.WriteLine($"Nome: {administradora.NomeEmpresa}");
             Console.WriteLine($"Documento: {administradora.Cnpj}");
-
-            List<Condominio> condominios = administradora.Condominios.ToList();
-
-            foreach (var condominio in condominios)
-            {
-                Console.WriteLine($"Condomínio {condominio.Id}: {condominio.NomeEmpresa}");    
-            }
         }
     }
 }

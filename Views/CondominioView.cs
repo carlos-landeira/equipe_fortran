@@ -21,7 +21,7 @@ namespace equipe_fortran.Views
                     {
                         NomeEmpresa = RequisitarValor("Digite o nome do condomínio:"),
                         Cnpj = RequisitarValor("Digite o documento:"),
-                        Unidades = VincularUnidades()
+                        Administradora = VincularAdministradora()
                     };
 
                     crud.Create(condominio);
@@ -49,7 +49,7 @@ namespace equipe_fortran.Views
 
                     condAtualizacao.NomeEmpresa = RequisitarValor("Digite o novo nome:");
                     condAtualizacao.Cnpj = RequisitarValor("Digite o novo CNPJ:");
-                    condAtualizacao.Unidades = VincularUnidades();
+                    condAtualizacao.Administradora = VincularAdministradora();
 
                     crud.Update(condAtualizacao);
                     break;
@@ -65,41 +65,32 @@ namespace equipe_fortran.Views
             }
         }
 
-        private List<Unidade> VincularUnidades()
+        private Administradora VincularAdministradora()
         {
-            CrudUnidade<Unidade> crudUnidade = new CrudUnidade<Unidade>();
-            List<Unidade> unidades = new List<Unidade>();
-            List<Unidade> unidadesCadastradas = crudUnidade.Read().ToList();
+            CrudAdministradora crudAdministradora = new CrudAdministradora();
+            Administradora administradora = new Administradora();
+            List<Administradora> administradorasCadastradas = crudAdministradora.Read().ToList();
 
-            if (unidadesCadastradas.Count > 0)
+            if (administradorasCadastradas.Count > 0)
             {
-                int[] idsUnidades = Array.ConvertAll(RequisitarValor("Digite os identificadores das unidades separados por ',': ").Split(','), int.Parse);
+                int id = int.Parse(RequisitarValor("Digite o ID da administradora"));
 
-                foreach (var id in idsUnidades)
-                {
-                    //unidades.Add(Unidade.FindById(id));
-                }
+                administradora = administradorasCadastradas.Find(a => a.Id == id);
             }
             else
             {
-                Console.WriteLine("Cadastre uma unidade e depois vincule-a ao condomínio!");
+                Console.WriteLine("Cadastre uma administradora para vincular!");
             }
 
-            return unidades;
+            return administradora;
         }
 
         private void ExibirCondominio(Condominio condominio)
         {
             Console.WriteLine($"Id: {condominio.Id}");
+            Console.WriteLine($"Administradora: {condominio.Administradora.NomeEmpresa}");
             Console.WriteLine($"Nome: {condominio.NomeEmpresa}");
             Console.WriteLine($"Documento: {condominio.Cnpj}");
-
-            List<Unidade> unidades = condominio.Unidades.ToList();
-
-            foreach (var unidade in unidades)
-            {
-                Console.WriteLine($"Unidade {unidade.Id}: {unidade.Nome}");
-            }
         }
     }
 }

@@ -81,7 +81,7 @@ namespace equipe_fortran.Views
 
                     if (tipoUnidadeEdicao == UNIDADE_TIPO_RESIDENCIAL)
                     {
-                        Unidade unidadeAtualizacaoR = crudR.Read().ToList().Find(a => a.Id == idAtualizacao);
+                        UnidadeResidencial unidadeAtualizacaoR = crudR.Read().ToList().Find(a => a.Id == idAtualizacao);
 
                         unidadeAtualizacaoR.Nome = RequisitarValor("Digite o novo nome da unidade");
                         unidadeAtualizacaoR.Morador = VincularMorador();
@@ -90,7 +90,7 @@ namespace equipe_fortran.Views
                     }
                     else
                     {
-                        Unidade unidadeAtualizacaoC = crudC.Read().ToList().Find(a => a.Id == idAtualizacao);
+                        UnidadeComercial unidadeAtualizacaoC = crudC.Read().ToList().Find(a => a.Id == idAtualizacao);
 
                         unidadeAtualizacaoC.Nome = RequisitarValor("Digite o novo nome da unidade");
                         unidadeAtualizacaoC.Morador = VincularMorador();
