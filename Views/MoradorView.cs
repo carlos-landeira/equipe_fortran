@@ -21,7 +21,8 @@ namespace equipe_fortran.Views
                 case ACAO_CRIAR:
                     Morador morador = new Morador
                     {
-                        Nome = RequisitarValor("Digite o nome do morador:")
+                        Nome = RequisitarValor("Digite o nome do morador:"),
+                        DataNascimento = RequisitarValor("Digite a data de nascimento:"),
                     };
 
                     crud.Create(morador);
@@ -48,6 +49,7 @@ namespace equipe_fortran.Views
                     Morador moradorAtualizacao = crud.Read().ToList().Find(a => a.Id == idAtualizacao);
 
                     moradorAtualizacao.Nome = RequisitarValor("Digite o novo nome:");
+                    moradorAtualizacao.DataNascimento = RequisitarValor("Digite a nova data de nascimento:");
 
                     crud.Update(moradorAtualizacao);
                     break;
