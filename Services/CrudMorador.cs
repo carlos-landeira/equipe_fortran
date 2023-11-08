@@ -95,17 +95,31 @@ public class CrudMorador: ICrud<Morador>
 
     private void AtualizarNaUnidade(Morador model)
     {
-        CrudUnidade<Unidade> crudUnidade = new CrudUnidade<Unidade>();
-        List<Unidade> unidades = crudUnidade.Read().ToList();
+        CrudUnidade<UnidadeComercial> crudUnidadeComercial = new CrudUnidade<UnidadeComercial>();
+        List<UnidadeComercial> unidadesComerciais = crudUnidadeComercial.Read().ToList();
 
-        foreach (var unidade in unidades)
+        CrudUnidade<UnidadeResidencial> crudUnidadeResidencial = new CrudUnidade<UnidadeResidencial>();
+        List<UnidadeResidencial> unidadeResidenciais = crudUnidadeResidencial.Read().ToList();
+
+        foreach (var unidade in unidadesComerciais)
         {
             if (unidade.Morador.Id == model.Id)
             {
                 unidade.Morador.Nome = model.Nome;
                 unidade.Morador.DataNascimento = model.DataNascimento;
                     
-                crudUnidade.Update(unidade);
+                crudUnidadeComercial.Update(unidade);
+            }
+        }
+        
+        foreach (var unidade in unidadeResidenciais)
+        {
+            if (unidade.Morador.Id == model.Id)
+            {
+                unidade.Morador.Nome = model.Nome;
+                unidade.Morador.DataNascimento = model.DataNascimento;
+                    
+                crudUnidadeResidencial.Update(unidade);
             }
         }
     }

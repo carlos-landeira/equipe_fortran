@@ -5,8 +5,6 @@ namespace Trabalho1.Services;
 
 public class CrudAdministradora: ICrud<Administradora>
 {
-    public static List<Administradora> AdministradorasCriadas = new List<Administradora>();
-    
     public IEnumerable<Administradora> Read()
     {
         List<Administradora> lista = new List<Administradora>();
@@ -62,8 +60,8 @@ public class CrudAdministradora: ICrud<Administradora>
             {
                 sw.WriteLine(JsonSerializer.Serialize(administradora));
             }
-            
             sw.Close();
+            AtualizarNoCondominio(model);
         }
         else
         {
@@ -91,6 +89,21 @@ public class CrudAdministradora: ICrud<Administradora>
         else
         {
             Console.WriteLine("Administradora não encontrada");
+        }
+    }
+
+    private void AtualizarNoCondominio(Administradora model)
+    {
+        CrudCondominio crudCondominio = new CrudCondominio();
+        List<Condominio> condominios = crudCondominio.Read().ToList();
+
+        foreach (var condominio in condominios)
+        {
+            if (condominio.Administradora.Id == model.Id)
+            {
+                condominio.Administradora.NomeEmpresa = model.NomeEmpresa;
+                condominio.Administradora.Cnpj = model.Cnpj;
+            }
         }
     }
 }

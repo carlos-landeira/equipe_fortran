@@ -8,19 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "/home/leticia/.nuget/packages/": {}
+    "/home/carlos/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/var/www/html/estudos/C#/equipe_fortran/Trabalho1.csproj",
+      "projectUniqueName": "/home/carlos/Documents/Trabalho1/Trabalho1.csproj",
       "projectName": "Trabalho1",
-      "projectPath": "/var/www/html/estudos/C#/equipe_fortran/Trabalho1.csproj",
-      "packagesPath": "/home/leticia/.nuget/packages/",
-      "outputPath": "/var/www/html/estudos/C#/equipe_fortran/obj/",
+      "projectPath": "/home/carlos/Documents/Trabalho1/Trabalho1.csproj",
+      "packagesPath": "/home/carlos/.nuget/packages/",
+      "outputPath": "/home/carlos/Documents/Trabalho1/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/leticia/.nuget/NuGet/NuGet.Config"
+        "/home/carlos/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"

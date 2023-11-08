@@ -3,11 +3,11 @@ using Trabalho1.Models;
 
 namespace Trabalho1.Services;
 
-public class CrudUnidade<T>: ICrud<Unidade>
+public class CrudUnidade<T>: ICrud<T> where T : Unidade
 {
-    public IEnumerable<Unidade> Read()
+    public IEnumerable<T> Read()
     {
-        List<Unidade> lista = new List<Unidade>();
+        List<T> lista = new List<T>();
         string linha;
         
         try
@@ -16,15 +16,7 @@ public class CrudUnidade<T>: ICrud<Unidade>
             linha = sr.ReadLine();
             while (linha != null)
             {
-                // var unidade = linha.Split(';');
-                // T model = new T
-                // {
-                //     Id = Convert.ToInt32(unidade[0]),
-                //     Nome = unidade[1],
-                //     Morador = Morador.FindById(int.Parse(unidade[2]))
-                // };
-                
-                Unidade model = JsonSerializer.Deserialize<Unidade>(linha);
+                T model = JsonSerializer.Deserialize<T>(linha);
                 lista.Add(model);
                 linha = sr.ReadLine();
             }
@@ -39,7 +31,7 @@ public class CrudUnidade<T>: ICrud<Unidade>
         return lista;
     }
 
-    public void Create(Unidade model)
+    public void Create(T model)
     {
         try
         {
@@ -53,9 +45,9 @@ public class CrudUnidade<T>: ICrud<Unidade>
         }
     }
 
-    public void Update(Unidade model)
+    public void Update(T model)
     {
-        List<Unidade> lista = Read().ToList();
+        List<T> lista = Read().ToList();
         Unidade unidadeParaAtualizar = lista.Find(x => x.Id == model.Id);
 
         if (unidadeParaAtualizar != null)
@@ -70,7 +62,7 @@ public class CrudUnidade<T>: ICrud<Unidade>
             }
             
             sw.Close();
-            AtualizarNoCondominio(model);
+            // AtualizarNoCondominio(model);
         }
         else
         {
@@ -80,9 +72,9 @@ public class CrudUnidade<T>: ICrud<Unidade>
 
     public void Delete(int id)
     {
-        List<Unidade> lista = Read().ToList();
+        List<T> lista = Read().ToList();
         
-        Unidade unidadeParaRemover = lista.Find(x => x.Id == id);
+        T unidadeParaRemover = lista.Find(x => x.Id == id);
 
         if (unidadeParaRemover != null)
         {
@@ -101,23 +93,23 @@ public class CrudUnidade<T>: ICrud<Unidade>
         }
     }
     
-    private void AtualizarNoCondominio(Unidade model)
-    {
-        CrudCondominio crudCondominio = new CrudCondominio();
-        List<Condominio> condominios = crudCondominio.Read().ToList();
-
-        foreach (var condominio in condominios)
-        {
-            foreach (var unidade in condominio.Unidades)
-            {
-                if (unidade.Id == model.Id)
-                {
-                    unidade.Nome = model.Nome;
-                    unidade.Morador = model.Morador;
-                    
-                    crudCondominio.Update(condominio);
-                }
-            }
-        }
-    }
+    // private void AtualizarNoCondominio(Unidade model)
+    // {
+    //     CrudCondominio crudCondominio = new CrudCondominio();
+    //     List<Condominio> condominios = crudCondominio.Read().ToList();
+    //
+    //     foreach (var condominio in condominios)
+    //     {
+    //         foreach (var unidade in condominio.Unidades)
+    //         {
+    //             if (unidade.Id == model.Id)
+    //             {
+    //                 unidade.Nome = model.Nome;
+    //                 unidade.Morador = model.Morador;
+    //                 
+    //                 crudCondominio.Update(condominio);
+    //             }
+    //         }
+    //     }
+    // }
 }

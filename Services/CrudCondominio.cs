@@ -62,7 +62,8 @@ public class CrudCondominio: ICrud<Condominio>
             }
             
             sw.Close();
-            AtualizarNaAdministradora(model);
+            // AtualizarNaAdministradora(model);
+            AtualizarNasUnidades(model);
         }
         else
         {
@@ -93,22 +94,53 @@ public class CrudCondominio: ICrud<Condominio>
         }
     }
 
-    private void AtualizarNaAdministradora(Condominio model)
+    // private void AtualizarNaAdministradora(Condominio model)
+    // {
+    //     CrudAdministradora crudAdministradora = new CrudAdministradora();
+    //     List<Administradora> administradoras = crudAdministradora.Read().ToList();
+    //
+    //     foreach (var administradora in administradoras)
+    //     {
+    //         foreach (var condominio in administradora.Condominios)
+    //         {
+    //             if (condominio.Cnpj == model.Cnpj)
+    //             {
+    //                 condominio.NomeEmpresa = model.NomeEmpresa;
+    //                 condominio.Cnpj = model.Cnpj;
+    //                 
+    //                 crudAdministradora.Update(administradora);
+    //             }
+    //         }
+    //     }
+    // }
+    
+    private void AtualizarNasUnidades(Condominio model)
     {
-        CrudAdministradora crudAdministradora = new CrudAdministradora();
-        List<Administradora> administradoras = crudAdministradora.Read().ToList();
+        CrudUnidade<UnidadeComercial> crudUnidadeComercial = new CrudUnidade<UnidadeComercial>();
+        CrudUnidade<UnidadeResidencial> crudUnidadeResidencial = new CrudUnidade<UnidadeResidencial>();
 
-        foreach (var administradora in administradoras)
+        List<UnidadeComercial> unidadesComerciais = crudUnidadeComercial.Read().ToList();
+        List<UnidadeResidencial> unidadesResidenciais = crudUnidadeResidencial.Read().ToList();
+
+        foreach (var unidadeComercial in unidadesComerciais)
         {
-            foreach (var condominio in administradora.Condominios)
+            if (unidadeComercial.Condominio.Id == model.Id)
             {
-                if (condominio.Cnpj == model.Cnpj)
-                {
-                    condominio.NomeEmpresa = model.NomeEmpresa;
-                    condominio.Cnpj = model.Cnpj;
-                    
-                    crudAdministradora.Update(administradora);
-                }
+                unidadeComercial.Condominio.NomeEmpresa = model.NomeEmpresa;
+                unidadeComercial.Condominio.Cnpj = model.Cnpj;
+                
+                crudUnidadeComercial.Update(unidadeComercial);
+            }
+        }
+
+        foreach (var unidadeResidencial in unidadesResidenciais)
+        {
+            if (unidadeResidencial.Condominio.Id == model.Id)
+            {
+                unidadeResidencial.Condominio.NomeEmpresa = model.NomeEmpresa;
+                unidadeResidencial.Condominio.Cnpj = model.Cnpj;
+                
+                crudUnidadeResidencial.Update(unidadeResidencial);
             }
         }
     }

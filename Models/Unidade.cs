@@ -6,9 +6,6 @@ public class Unidade: BaseModel
 {
     public string Nome { get; set; }
     public Morador Morador { get; set; }
-
-    public string ToString()
-    {
-        return base.ToString() + $";{Nome};{Morador.Id}";
-    }
+    
+    public Condominio Condominio { get; set; }
 }

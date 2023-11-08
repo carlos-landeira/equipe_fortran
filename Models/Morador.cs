@@ -21,9 +21,4 @@ public class Morador: BaseModel
 
         return moradores.Find(x => x.Id == id) ?? new Morador();
     }
-
-    public string ToString()
-    {
-        return base.ToString() + $";{Nome};{DataNascimento}";
-    }
 }
