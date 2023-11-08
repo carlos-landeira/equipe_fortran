@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Trabalho1.Models;
 using Trabalho1.Services;
 using Trabalho1.Views;
@@ -16,17 +12,17 @@ namespace equipe_fortran.Views
         public override void Main()
         {
             ExibirOpcoesCrud("unidades");
-            // instanciar crud aqui
+            CrudUnidade<UnidadeResidencial> crudR = new CrudUnidade<UnidadeResidencial>();
+            CrudUnidade<UnidadeComercial> crudC = new CrudUnidade<UnidadeComercial>();
 
             switch (ObterEscolhaUsuario())
             {
                 case ACAO_CRIAR:
-                    ExibirOpcoesTipoUnidade();
+                    ExibirOpcoesTipoUnidade("cadastrada");
                     string tipoUnidade = ObterEscolhaUsuario().ToUpper();
 
                     if (tipoUnidade == UNIDADE_TIPO_RESIDENCIAL)
                     {
-                        CrudUnidade<UnidadeResidencial> crudR = new CrudUnidade<UnidadeResidencial>();
                         UnidadeResidencial unidadeR = new UnidadeResidencial()
                         {
                             Nome = RequisitarValor("Digite o nome da unidade"),
@@ -37,7 +33,6 @@ namespace equipe_fortran.Views
                     }
                     else
                     {
-                        CrudUnidade<UnidadeComercial> crudC = new CrudUnidade<UnidadeComercial>();
                         UnidadeComercial unidadeC = new UnidadeComercial()
                         {
                             Nome = RequisitarValor("Digite o nome da unidade"),
@@ -48,34 +43,76 @@ namespace equipe_fortran.Views
                     }
                     break;
                 case ACAO_VISUALIZAR:
-                    //IEnumerable<Unidade> listaUnidades = crud.Read();
+                    IEnumerable<Unidade> listaUnidadesR = crudR.Read();
+                    IEnumerable<Unidade> listaUnidadesC = crudC.Read();
 
-                    // if (listaUnidades.Count() == 0)
-                    // {
-                    //     Console.WriteLine("Não há nenhuma unidade cadastrado.");
-                    // }
-                    // else
-                    // {
-                    //     foreach (var uni in listaUnidades)
-                    //     {
-                    //         ExibirUnidade(uni);
-                    //     }
-                    // }
+                    if (listaUnidadesR.Count() == 0)
+                    {
+                        Console.WriteLine("Não há nenhuma unidade residencial cadastrada.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unidades residenciais:\n");
+                        foreach (var uniR in listaUnidadesR)
+                        {
+                            ExibirUnidade(uniR);
+                        }
+                    }
+
+                    if (listaUnidadesC.Count() == 0)
+                    {
+                        Console.WriteLine("Não há nenhuma unidade comercial cadastrada.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Unidades comerciais:\n");
+                        foreach (var uniC in listaUnidadesC)
+                        {
+                            ExibirUnidade(uniC);
+                        }
+                    }
                     break;
                 case ACAO_EDITAR:
+                    ExibirOpcoesTipoUnidade("editada");
+                    string tipoUnidadeEdicao = ObterEscolhaUsuario().ToUpper();
+
                     Console.Write("Digite o ID da unidade que deseja atualizar:");
                     int idAtualizacao = int.Parse(Console.ReadLine());
 
-                    // Unidade unidadeAtualizacao = crud.Read().ToList().Find(a => a.Id == idAtualizacao);
-                    // unidadeAtualizacao.Nome = RequisitarValor("Digite o novo nome:");
+                    if (tipoUnidadeEdicao == UNIDADE_TIPO_RESIDENCIAL)
+                    {
+                        Unidade unidadeAtualizacaoR = crudR.Read().ToList().Find(a => a.Id == idAtualizacao);
 
-                    // crud.Update(unidadeAtualizacao);
+                        unidadeAtualizacaoR.Nome = RequisitarValor("Digite o novo nome da unidade");
+                        unidadeAtualizacaoR.Morador = VincularMorador();
+
+                        crudR.Update(unidadeAtualizacaoR);
+                    }
+                    else
+                    {
+                        Unidade unidadeAtualizacaoC = crudC.Read().ToList().Find(a => a.Id == idAtualizacao);
+
+                        unidadeAtualizacaoC.Nome = RequisitarValor("Digite o novo nome da unidade");
+                        unidadeAtualizacaoC.Morador = VincularMorador();
+
+                        crudC.Update(unidadeAtualizacaoC);
+                    }
                     break;
                 case ACAO_EXCLUIR:
+                    ExibirOpcoesTipoUnidade("escluída");
+                    string tipoUnidadeExclusao = ObterEscolhaUsuario().ToUpper();
+
                     Console.Write("Digite o ID da unidade que deseja excluir:");
                     int idExclusao = int.Parse(Console.ReadLine());
 
-                    // crud.Delete(idExclusao);
+                    if (tipoUnidadeExclusao == UNIDADE_TIPO_RESIDENCIAL)
+                    {
+                        crudR.Delete(idExclusao);
+                    }
+                    else
+                    {
+                        crudC.Delete(idExclusao);
+                    }
                     break;
                 default:
                     Console.WriteLine("Esta opção não existe.");
@@ -103,9 +140,9 @@ namespace equipe_fortran.Views
             return morador;
         }
 
-        private void ExibirOpcoesTipoUnidade()
+        private void ExibirOpcoesTipoUnidade(string acao)
         {
-            Console.WriteLine("Qual o tipo da unidade a ser cadastrada?");
+            Console.WriteLine($"Qual o tipo da unidade a ser {acao}?");
             Console.WriteLine("c - Comercial");
             Console.WriteLine("r - Residencial");
         }
