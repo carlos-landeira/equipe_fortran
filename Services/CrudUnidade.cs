@@ -12,7 +12,7 @@ public class CrudUnidade<T>: ICrud<T> where T : Unidade
         
         try
         {
-            StreamReader sr = new StreamReader($"/home/carlos/Documents/Trabalho1/BancoDeDados/{typeof(T).Name}.txt");
+            StreamReader sr = new StreamReader($"BancoDeDados/{typeof(T).Name}.txt");
             linha = sr.ReadLine();
             while (linha != null)
             {
@@ -35,7 +35,7 @@ public class CrudUnidade<T>: ICrud<T> where T : Unidade
     {
         try
         {
-            StreamWriter sw = new StreamWriter($"/home/carlos/Documents/Trabalho1/BancoDeDados/{typeof(T).Name}.txt", true);
+            StreamWriter sw = new StreamWriter($"BancoDeDados/{typeof(T).Name}.txt", true);
             sw.WriteLine(JsonSerializer.Serialize(model));
             sw.Close();
         }
@@ -55,7 +55,7 @@ public class CrudUnidade<T>: ICrud<T> where T : Unidade
             unidadeParaAtualizar.Nome = model.Nome;
             unidadeParaAtualizar.Morador = model.Morador;
             
-            StreamWriter sw = new StreamWriter($"/home/carlos/Documents/Trabalho1/BancoDeDados/{typeof(T).Name}.txt");
+            StreamWriter sw = new StreamWriter($"BancoDeDados/{typeof(T).Name}.txt");
             foreach (var unidade in lista)
             {
                 sw.WriteLine(JsonSerializer.Serialize(unidade));
@@ -79,7 +79,7 @@ public class CrudUnidade<T>: ICrud<T> where T : Unidade
         if (unidadeParaRemover != null)
         {
             lista.Remove(unidadeParaRemover);
-            StreamWriter sw = new StreamWriter($"/home/carlos/Documents/Trabalho1/BancoDeDados/{typeof(T).Name}.txt");
+            StreamWriter sw = new StreamWriter($"BancoDeDados/{typeof(T).Name}.txt");
             foreach (var unidade in lista)
             {
                 sw.WriteLine(JsonSerializer.Serialize(unidade));

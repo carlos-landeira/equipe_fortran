@@ -12,7 +12,7 @@ public class CrudAdministradora: ICrud<Administradora>
         
         try
         {
-            StreamReader sr = new StreamReader("/home/carlos/Documents/Trabalho1/BancoDeDados/Administradora.txt");
+            StreamReader sr = new StreamReader("BancoDeDados/Administradora.txt");
             linha = sr.ReadLine();
             while (linha != null)
             {
@@ -35,7 +35,7 @@ public class CrudAdministradora: ICrud<Administradora>
     {
         try
         {
-            StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Administradora.txt", true);
+            StreamWriter sw = new StreamWriter("BancoDeDados/Administradora.txt", true);
             sw.WriteLine(JsonSerializer.Serialize(model));
             sw.Close();
         }
@@ -55,7 +55,7 @@ public class CrudAdministradora: ICrud<Administradora>
             administradoraParaAtualizar.NomeEmpresa = model.NomeEmpresa;
             administradoraParaAtualizar.Cnpj = model.Cnpj;
             
-            StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Administradora.txt");
+            StreamWriter sw = new StreamWriter("BancoDeDados/Administradora.txt");
             foreach (var administradora in lista)
             {
                 sw.WriteLine(JsonSerializer.Serialize(administradora));
@@ -78,7 +78,7 @@ public class CrudAdministradora: ICrud<Administradora>
         if (administradoraParaRemover != null)
         {
             lista.Remove(administradoraParaRemover);
-            StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Administradora.txt");
+            StreamWriter sw = new StreamWriter("BancoDeDados/Administradora.txt");
             foreach (var administradora in lista)
             {
                 sw.WriteLine(JsonSerializer.Serialize(administradora));

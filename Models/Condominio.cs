@@ -16,11 +16,11 @@ public class Condominio: PessoaJuridica
         // this.Unidades = new List<Unidade>();
     }
 
-    // public static Condominio FindById(int id)
-    // {
-    //     CrudCondominio crudCondominio = new CrudCondominio();
-    //     List<Condominio> condominios = crudCondominio.Read().ToList();
-    //
-    //     return condominios.Find(x => x.Id == id) ?? new Condominio();
-    // }
+    public static Condominio FindById(int id)
+    {
+        CrudCondominio crudCondominio = new CrudCondominio();
+        List<Condominio> condominios = crudCondominio.Read().ToList();
+    
+        return condominios.Find(x => x.Id == id) ?? new Condominio();
+    }
 }

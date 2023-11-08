@@ -26,6 +26,7 @@ namespace equipe_fortran.Views
                         UnidadeResidencial unidadeR = new UnidadeResidencial()
                         {
                             Nome = RequisitarValor("Digite o nome da unidade"),
+                            Condominio = VincularCondominio(),
                             Morador = VincularMorador()
                         };
 
@@ -36,6 +37,7 @@ namespace equipe_fortran.Views
                         UnidadeComercial unidadeC = new UnidadeComercial()
                         {
                             Nome = RequisitarValor("Digite o nome da unidade"),
+                            Condominio = VincularCondominio(),
                             Morador = VincularMorador()
                         };
 
@@ -83,19 +85,36 @@ namespace equipe_fortran.Views
                     {
                         UnidadeResidencial unidadeAtualizacaoR = crudR.Read().ToList().Find(a => a.Id == idAtualizacao);
 
-                        unidadeAtualizacaoR.Nome = RequisitarValor("Digite o novo nome da unidade");
-                        unidadeAtualizacaoR.Morador = VincularMorador();
+                        if (unidadeAtualizacaoR == null)
+                        {
+                            Console.WriteLine("Unidade não encontrada!");
+                        }
+                        else
+                        {
+                            unidadeAtualizacaoR.Nome = RequisitarValor("Digite o novo nome da unidade");
+                            unidadeAtualizacaoR.Condominio = VincularCondominio();
+                            unidadeAtualizacaoR.Morador = VincularMorador();
 
-                        crudR.Update(unidadeAtualizacaoR);
+                            crudR.Update(unidadeAtualizacaoR);
+                        }
                     }
                     else
                     {
                         UnidadeComercial unidadeAtualizacaoC = crudC.Read().ToList().Find(a => a.Id == idAtualizacao);
 
-                        unidadeAtualizacaoC.Nome = RequisitarValor("Digite o novo nome da unidade");
-                        unidadeAtualizacaoC.Morador = VincularMorador();
+                        if (unidadeAtualizacaoC == null)
+                        {
+                            Console.WriteLine("Unidade não encontrada!");
+                        }
+                        else
+                        {
+                            unidadeAtualizacaoC.Nome = RequisitarValor("Digite o novo nome da unidade");
+                            unidadeAtualizacaoC.Condominio = VincularCondominio();
+                            unidadeAtualizacaoC.Morador = VincularMorador();
 
-                        crudC.Update(unidadeAtualizacaoC);
+                            crudC.Update(unidadeAtualizacaoC);
+                        }
+
                     }
                     break;
                 case ACAO_EXCLUIR:
@@ -118,6 +137,26 @@ namespace equipe_fortran.Views
                     Console.WriteLine("Esta opção não existe.");
                     break;
             }
+        }
+        
+        private Condominio VincularCondominio()
+        {
+            CrudCondominio crudCondominio = new CrudCondominio();
+            Condominio condominio = new Condominio();
+            List<Condominio> moradoresCadastrados = crudCondominio.Read().ToList();
+
+            if (moradoresCadastrados.Count > 0)
+            {
+                int idMorador = int.Parse(RequisitarValor("Insira o identificador do condomínio que a unidade pertence:"));
+
+                condominio = Condominio.FindById(idMorador);
+            }
+            else
+            {
+                Console.WriteLine("Cadastre um condomínio e depois vincule-o à unidade!");
+            }
+
+            return condominio;
         }
 
         private Morador VincularMorador()
@@ -150,6 +189,7 @@ namespace equipe_fortran.Views
         private void ExibirUnidade(Unidade unidade)
         {
             Console.WriteLine($"Id: {unidade.Id}");
+            Console.WriteLine($"Condomínio: {unidade.Condominio.NomeEmpresa}");
             Console.WriteLine($"Nome: {unidade.Nome}");
             Console.WriteLine($"Morador: {unidade.Morador.Nome}");
         }

@@ -12,7 +12,7 @@ public class CrudMorador: ICrud<Morador>
         
         try
         {
-            StreamReader sr = new StreamReader("/home/carlos/Documents/Trabalho1/BancoDeDados/Morador.txt");
+            StreamReader sr = new StreamReader("BancoDeDados/Morador.txt");
             linha = sr.ReadLine();
             while (linha != null)
             {
@@ -35,7 +35,7 @@ public class CrudMorador: ICrud<Morador>
     {
         try
         {
-            StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Morador.txt", true);
+            StreamWriter sw = new StreamWriter("BancoDeDados/Morador.txt", true);
             sw.WriteLine(JsonSerializer.Serialize(model));
             sw.Close();
         }
@@ -55,7 +55,7 @@ public class CrudMorador: ICrud<Morador>
             moradorParaAtualizar.Nome = model.Nome;
             moradorParaAtualizar.DataNascimento = model.DataNascimento;
             
-            StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Morador.txt");
+            StreamWriter sw = new StreamWriter("BancoDeDados/Morador.txt");
             foreach (var morador in lista)
             {
                 sw.WriteLine(JsonSerializer.Serialize(morador));
@@ -79,7 +79,7 @@ public class CrudMorador: ICrud<Morador>
         if (moradorParaRemover != null)
         {
             lista.Remove(moradorParaRemover);
-            StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Morador.txt");
+            StreamWriter sw = new StreamWriter("BancoDeDados/Morador.txt");
             foreach (var morador in lista)
             {
                 sw.WriteLine(JsonSerializer.Serialize(morador));

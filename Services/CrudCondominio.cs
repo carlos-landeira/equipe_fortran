@@ -12,7 +12,7 @@ public class CrudCondominio: ICrud<Condominio>
         
         try
         {
-            StreamReader sr = new StreamReader("/home/carlos/Documents/Trabalho1/BancoDeDados/Condominio.txt");
+            StreamReader sr = new StreamReader("BancoDeDados/Condominio.txt");
             linha = sr.ReadLine();
             while (linha != null)
             {
@@ -35,7 +35,7 @@ public class CrudCondominio: ICrud<Condominio>
     {
         try
         {
-            StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Condominio.txt", true);
+            StreamWriter sw = new StreamWriter("BancoDeDados/Condominio.txt", true);
             sw.WriteLine(JsonSerializer.Serialize(model));
             sw.Close();
         }
@@ -55,7 +55,7 @@ public class CrudCondominio: ICrud<Condominio>
             condominioParaAtualizar.NomeEmpresa = model.NomeEmpresa;
             condominioParaAtualizar.Cnpj = model.Cnpj;
             
-            StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Condominio.txt");
+            StreamWriter sw = new StreamWriter("BancoDeDados/Condominio.txt");
             foreach (var condominio in lista)
             {
                 sw.WriteLine(JsonSerializer.Serialize(condominio));
@@ -80,7 +80,7 @@ public class CrudCondominio: ICrud<Condominio>
         if (condominioParaRemover != null)
         {
             lista.Remove(condominioParaRemover);
-            StreamWriter sw = new StreamWriter("/home/carlos/Documents/Trabalho1/BancoDeDados/Condominio.txt");
+            StreamWriter sw = new StreamWriter("BancoDeDados/Condominio.txt");
             foreach (var condominio in lista)
             {
                 sw.WriteLine(JsonSerializer.Serialize(condominio));
