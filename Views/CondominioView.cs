@@ -6,8 +6,6 @@ namespace equipe_fortran.Views
 {
     public class CondominioView : View
     {
-
-
         public override void Main()
         {
             CrudCondominio crud = new CrudCondominio();
@@ -73,7 +71,7 @@ namespace equipe_fortran.Views
 
             if (administradorasCadastradas.Count > 0)
             {
-                int id = int.Parse(RequisitarValor("Digite o ID da administradora"));
+                int id = int.Parse(RequisitarValor("Digite o ID da administradora:"));
 
                 administradora = administradorasCadastradas.Find(a => a.Id == id);
             }
