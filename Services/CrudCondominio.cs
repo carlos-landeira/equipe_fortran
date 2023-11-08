@@ -53,6 +53,7 @@ public class CrudCondominio: ICrud<Condominio>
         if (condominioParaAtualizar != null)
         {
             condominioParaAtualizar.NomeEmpresa = model.NomeEmpresa;
+            condominioParaAtualizar.Administradora = model.Administradora;
             condominioParaAtualizar.Cnpj = model.Cnpj;
             
             StreamWriter sw = new StreamWriter("BancoDeDados/Condominio.txt");
@@ -78,6 +79,7 @@ public class CrudCondominio: ICrud<Condominio>
 
         if (condominioParaRemover != null)
         {
+            DeletarNasUnidades(condominioParaRemover);
             lista.Remove(condominioParaRemover);
             StreamWriter sw = new StreamWriter("BancoDeDados/Condominio.txt");
             foreach (var condominio in lista)
@@ -106,6 +108,7 @@ public class CrudCondominio: ICrud<Condominio>
             if (unidadeComercial.Condominio.Id == model.Id)
             {
                 unidadeComercial.Condominio.NomeEmpresa = model.NomeEmpresa;
+                unidadeComercial.Condominio.Administradora = model.Administradora;
                 unidadeComercial.Condominio.Cnpj = model.Cnpj;
                 
                 crudUnidadeComercial.Update(unidadeComercial);
@@ -117,8 +120,38 @@ public class CrudCondominio: ICrud<Condominio>
             if (unidadeResidencial.Condominio.Id == model.Id)
             {
                 unidadeResidencial.Condominio.NomeEmpresa = model.NomeEmpresa;
+                unidadeResidencial.Condominio.Administradora = model.Administradora;
                 unidadeResidencial.Condominio.Cnpj = model.Cnpj;
                 
+                crudUnidadeResidencial.Update(unidadeResidencial);
+            }
+        }
+    }
+
+    private void DeletarNasUnidades(Condominio model)
+    {
+        CrudUnidade<UnidadeComercial> crudUnidadeComercial = new CrudUnidade<UnidadeComercial>();
+        CrudUnidade<UnidadeResidencial> crudUnidadeResidencial = new CrudUnidade<UnidadeResidencial>();
+
+        List<UnidadeComercial> unidadesComerciais = crudUnidadeComercial.Read().ToList();
+        List<UnidadeResidencial> unidadesResidenciais = crudUnidadeResidencial.Read().ToList();
+
+        foreach (var unidadeComercial in unidadesComerciais)
+        {
+            if (unidadeComercial.Condominio.Id == model.Id)
+            {
+                unidadeComercial.Condominio = null;
+
+                crudUnidadeComercial.Update(unidadeComercial);
+            }
+        }
+        
+        foreach (var unidadeResidencial in unidadesResidenciais)
+        {
+            if (unidadeResidencial.Condominio.Id == model.Id)
+            {
+                unidadeResidencial.Condominio = null;
+
                 crudUnidadeResidencial.Update(unidadeResidencial);
             }
         }

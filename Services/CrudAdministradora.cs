@@ -77,6 +77,7 @@ public class CrudAdministradora: ICrud<Administradora>
 
         if (administradoraParaRemover != null)
         {
+            DeletarNoCondominio(administradoraParaRemover);
             lista.Remove(administradoraParaRemover);
             StreamWriter sw = new StreamWriter("BancoDeDados/Administradora.txt");
             foreach (var administradora in lista)
@@ -103,6 +104,24 @@ public class CrudAdministradora: ICrud<Administradora>
             {
                 condominio.Administradora.NomeEmpresa = model.NomeEmpresa;
                 condominio.Administradora.Cnpj = model.Cnpj;
+                
+                crudCondominio.Update(condominio);
+            }
+        }
+    }
+
+    private void DeletarNoCondominio(Administradora model)
+    {
+        CrudCondominio crudCondominio = new CrudCondominio();
+        List<Condominio> condominios = crudCondominio.Read().ToList();
+
+        foreach (var condominio in condominios)
+        {
+            if (condominio.Administradora.Id == model.Id)
+            {
+                condominio.Administradora = null;
+                
+                crudCondominio.Update(condominio);
             }
         }
     }

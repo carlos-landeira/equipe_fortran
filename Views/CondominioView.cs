@@ -86,7 +86,7 @@ namespace equipe_fortran.Views
         private void ExibirCondominio(Condominio condominio)
         {
             Console.WriteLine($"Id: {condominio.Id}");
-            Console.WriteLine($"Administradora: {condominio.Administradora.NomeEmpresa}");
+            Console.WriteLine("Administradora: " + (condominio.Administradora != null ? condominio.Administradora.NomeEmpresa : ""));
             Console.WriteLine($"Nome: {condominio.NomeEmpresa}");
             Console.WriteLine($"Documento: {condominio.Cnpj}");
             Console.WriteLine("\n-----------------------------\n");

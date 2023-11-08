@@ -53,6 +53,7 @@ public class CrudUnidade<T>: ICrud<T> where T : Unidade
         if (unidadeParaAtualizar != null)
         {
             unidadeParaAtualizar.Nome = model.Nome;
+            unidadeParaAtualizar.Condominio = model.Condominio;
             unidadeParaAtualizar.Morador = model.Morador;
             
             StreamWriter sw = new StreamWriter($"BancoDeDados/{typeof(T).Name}.txt");

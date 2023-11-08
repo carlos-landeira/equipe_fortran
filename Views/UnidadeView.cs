@@ -189,9 +189,9 @@ namespace equipe_fortran.Views
         private void ExibirUnidade(Unidade unidade)
         {
             Console.WriteLine($"Id: {unidade.Id}");
-            Console.WriteLine($"Condomínio: {unidade.Condominio.NomeEmpresa}");
+            Console.WriteLine("Condomínio: " + (unidade.Condominio != null ? unidade.Condominio.NomeEmpresa : ""));
             Console.WriteLine($"Nome: {unidade.Nome}");
-            Console.WriteLine($"Morador: {unidade.Morador.Nome}");
+            Console.WriteLine("Morador: " + (unidade.Morador != null ? unidade.Morador.Nome : ""));
             Console.WriteLine("\n-----------------------------\n");
         }
     }
