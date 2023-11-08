@@ -1,1 +1,1 @@
-{"Unidades":[],"NomeEmpresa":"teste 1","Cnpj":"esdgsdg","Id":0}
+{"Administradora":{"NomeEmpresa":"teste","Cnpj":"256","Id":5},"NomeEmpresa":"teste 2","Cnpj":"323","Id":0}
