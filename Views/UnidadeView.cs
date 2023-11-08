@@ -43,8 +43,8 @@ namespace equipe_fortran.Views
                     }
                     break;
                 case ACAO_VISUALIZAR:
-                    IEnumerable<Unidade> listaUnidadesR = crudR.Read();
-                    IEnumerable<Unidade> listaUnidadesC = crudC.Read();
+                    IEnumerable<UnidadeResidencial> listaUnidadesR = crudR.Read();
+                    IEnumerable<UnidadeComercial> listaUnidadesC = crudC.Read();
 
                     if (listaUnidadesR.Count() == 0)
                     {
@@ -81,7 +81,7 @@ namespace equipe_fortran.Views
 
                     if (tipoUnidadeEdicao == UNIDADE_TIPO_RESIDENCIAL)
                     {
-                        Unidade unidadeAtualizacaoR = crudR.Read().ToList().Find(a => a.Id == idAtualizacao);
+                        UnidadeResidencial unidadeAtualizacaoR = crudR.Read().ToList().Find(a => a.Id == idAtualizacao);
 
                         unidadeAtualizacaoR.Nome = RequisitarValor("Digite o novo nome da unidade");
                         unidadeAtualizacaoR.Morador = VincularMorador();
@@ -90,7 +90,7 @@ namespace equipe_fortran.Views
                     }
                     else
                     {
-                        Unidade unidadeAtualizacaoC = crudC.Read().ToList().Find(a => a.Id == idAtualizacao);
+                        UnidadeComercial unidadeAtualizacaoC = crudC.Read().ToList().Find(a => a.Id == idAtualizacao);
 
                         unidadeAtualizacaoC.Nome = RequisitarValor("Digite o novo nome da unidade");
                         unidadeAtualizacaoC.Morador = VincularMorador();
@@ -99,7 +99,7 @@ namespace equipe_fortran.Views
                     }
                     break;
                 case ACAO_EXCLUIR:
-                    ExibirOpcoesTipoUnidade("escluída");
+                    ExibirOpcoesTipoUnidade("excluída");
                     string tipoUnidadeExclusao = ObterEscolhaUsuario().ToUpper();
 
                     Console.Write("Digite o ID da unidade que deseja excluir:");
